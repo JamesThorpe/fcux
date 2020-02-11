@@ -29,6 +29,8 @@ namespace FcuCore.Web {
 
             _manager.ConnectionStateChanged += ConnectionStateChanged;
 
+            await SendCbusConnectionStatus();
+
             var buffer = new byte[1024 * 4];
             var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             while (!result.CloseStatus.HasValue) {
@@ -50,12 +52,25 @@ namespace FcuCore.Web {
                 _manager.Messenger.MessageReceived -= CbusMessageReceived;
             }
 
+            SendCbusConnectionStatus();
+
         }
 
         private async void CbusMessageReceived(object sender, CbusMessageEventArgs args)
         {
-            var s = JsonConvert.SerializeObject(args.Message);
+            await SendMessage(new {Type = "cbus", Message = args.Message});
+        }
+
+        private async Task SendCbusConnectionStatus()
+        {
+            await SendMessage(new {Type = "connection-status", IsConnected = _manager.ConnectionState == CbusConnectionState.Connected});
+        }
+
+        private async Task SendMessage(object msg)
+        {
+            var s = JsonConvert.SerializeObject(msg);
             await _webSocket.SendAsync(Encoding.UTF8.GetBytes(s), WebSocketMessageType.Text, true, CancellationToken.None);
+
         }
     }
 }

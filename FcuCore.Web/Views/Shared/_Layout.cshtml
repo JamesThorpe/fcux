@@ -3,25 +3,31 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FcuCore.Web</title>
+    <title>@ViewData["Title"] - CBUS Web</title>
+    
+    
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+        <link rel="stylesheet" href="~/css/site.min.css" />
     </environment>
-    <link rel="stylesheet" href="~/css/site.css" />
+    
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FcuCore.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CBUS Web</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,18 +37,54 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Actions</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" data-bind="css: {disabled: status.cbusConnected()}, disable: status.cbusConnected(), click: comms.connect">Connect</a>
+                                <a class="dropdown-item" data-bind="css: {disabled: !status.cbusConnected()}, enable: status.cbusConnected(), click: comms.disconnect" href="#">Disconnect</a>
+                                <a class="dropdown-item" href="#" data-bind="click: status.toggleDebug">
+                                    <i class="fa fa-check" data-bind="visible: status.showMessages"></i>
+                                    Show CBUS Messages
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-bind="css: {disabled: !status.cbusConnected()}, enable: status.cbusConnected(), click: api.sendQNN">Query all nodes</a>
+
+                            </div>
+                        </li>
+                        <li class="nav-item" data-bind="hidden: status.socketConnected">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+<div class="container-fluid">
+    <div class="row">
+        <div data-bind="css: {'col-10': status.showMessages(), 'col-12': !status.showMessages()}">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <!-- ko if: status.showMessages -->
+        <div class="col-2">
+            <div class="debug-view">
+                <!-- ko foreach: status.receivedMessagesBuffer -->
+                <div>
+                    <span data-bind="text: DisplayString"></span>
+                    <pre data-bind="text: TransportString"></pre>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- /ko -->
     </div>
 
-    <footer class="border-top footer text-muted">
+</div>
+
+
+
+<footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2019 - MERG
         </div>
@@ -52,21 +94,35 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     </environment>
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-        </script>
-    </environment>
+<environment exclude="Development">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"
+            crossorigin="anonymous"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+            crossorigin="anonymous"
+            integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+    </script>
+</environment>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js" integrity="sha256-Tjl7WVgF1hgGMgUKZZfzmxOrtoSf8qltZ9wMujjGNQk=" crossorigin="anonymous"></script>
+
+<environment include="Development">
+    <script src="~/js/TinyPubSub.js" asp-append-version="true"></script>
+    <script src="~/js/cbusCore.js" asp-append-version="true"></script>
+    <script src="~/js/cbusModules.js" asp-append-version="true"></script>
+    <script src="~/js/modules/canacc4.js" asp-append-version="true"></script>
+    <script src="~/js/modules/canace8c.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+</environment>
+
+
 
     @RenderSection("Scripts", required: false)
 </body>

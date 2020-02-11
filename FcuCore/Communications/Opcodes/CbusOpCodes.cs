@@ -8,6 +8,7 @@ namespace FcuCore.Communications.Opcodes
     {
         QueryAllNodes = 0x0D,
         AcOn = 0x90,
-        AcOff = 0x91
+        AcOff = 0x91,
+        ResponseToQueryNode = 0xB6
     }
 }

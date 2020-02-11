@@ -2,10 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Flim Config Utility</h1>
+<!-- ko foreach: modules.list-->
+
+<div>
+    <span data-bind="text: CanId"></span>/<span data-bind="text: Definition.Name"></span>
+    <div class="features">
+        <i class="fa fa-sign-out" data-bind="css: { 'module-feature': IsProducerNode}"></i>
+        <i class="fa fa-sign-in" data-bind="css: { 'module-feature': IsConsumerNode}"></i>
+        <i class="fa fa-cogs" data-bind="css: {'module-feature' : InFlimMode}"></i>
+        <i class="fa fa-upload" data-bind="css: {'module-feature' : SupportsBootloader}"></i>
+    </div>
 </div>
 
-<button type="button" id="open-comms">Open Comms</button>
-<button type="button" id="close-comms">Close Comms</button>
-<button type="button" id="enumerate">Enumerate</button>
+<!-- /ko -->
