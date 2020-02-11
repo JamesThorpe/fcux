@@ -51,3 +51,17 @@ div.features {
 div.features .module-feature {
     color: #046b04;
 }
+
+div.cbus-module {
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    margin: 15px;
+    padding: 15px;
+    position: relative;
+}
+
+div.cbus-module div.features {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}

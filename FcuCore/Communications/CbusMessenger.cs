@@ -8,6 +8,7 @@ namespace FcuCore.Communications
     {
         private readonly ITransport _transport;
         public event EventHandler<CbusMessageEventArgs> MessageReceived;
+        public event EventHandler<CbusMessageEventArgs> MessageSent;
 
         public CbusMessenger(ITransport transport)
         {
@@ -49,6 +50,7 @@ namespace FcuCore.Communications
             message.MajorPriority = MajorPriority.Low;
 
             await _transport.SendBytes(Encoding.ASCII.GetBytes(message.TransportString));
+            MessageSent?.Invoke(this, new CbusMessageEventArgs(message));
             return true;
         }
 

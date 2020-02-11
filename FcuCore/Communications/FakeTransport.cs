@@ -8,23 +8,29 @@ namespace FcuCore.Communications {
         public event EventHandler<BytesReceivedEventArgs> BytesReceived;
         public async Task SendBytes(byte[] bytes)
         {
-            var msg = Encoding.ASCII.GetString(bytes);
-            var cmsg = CbusMessage.FromTransportString(msg);
-            switch (cmsg.OpCode) {
-                case CbusOpCodes.QueryAllNodes:
-                    await Task.Delay(500);
-                    BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB060NB60102A5080D;")));
-                    await Task.Delay(100);
-                    BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB020NB60100A5050F;")));
-                    await Task.Delay(100);
-                    BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB040NB60101A5050F;")));
-                    break;
-            }
+            var _ = Task.Run(async () => {
+                var msg = Encoding.ASCII.GetString(bytes);
+                var cmsg = CbusMessage.FromTransportString(msg);
+                switch (cmsg.OpCode) {
+                    case CbusOpCodes.QueryAllNodes:
+                        await Task.Delay(500);
+                        BytesReceived?.Invoke(this,
+                            new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB060NB60102A5080D;")));
+                        await Task.Delay(100);
+                        BytesReceived?.Invoke(this,
+                            new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB020NB60100A5050F;")));
+                        await Task.Delay(100);
+                        BytesReceived?.Invoke(this,
+                            new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB040NB60101A5050F;")));
+                        break;
+                }
+            });
         }
 
         public FakeTransport()
         {
             Task.Run(async () => {
+                return;
                 while (true) {
                     await Task.Delay(1000);
                     BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(GetFakeMessage())));

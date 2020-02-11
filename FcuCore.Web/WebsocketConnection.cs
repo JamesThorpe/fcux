@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -24,6 +25,7 @@ namespace FcuCore.Web {
                 var msgs = _manager.Messenger;
                 if (msgs != null) {
                     msgs.MessageReceived += CbusMessageReceived;
+                    msgs.MessageSent += CbusMessageSent;
                 }
             }
 
@@ -40,6 +42,7 @@ namespace FcuCore.Web {
             _manager.ConnectionStateChanged -= ConnectionStateChanged;
             if (_manager.ConnectionState == CbusConnectionState.Connected) {
                 _manager.Messenger.MessageReceived -= CbusMessageReceived;
+                _manager.Messenger.MessageSent -= CbusMessageSent;
             }
             await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
         }
@@ -48,8 +51,10 @@ namespace FcuCore.Web {
         {
             if (args.ConnectionState == CbusConnectionState.Connected) {
                 _manager.Messenger.MessageReceived += CbusMessageReceived;
+                _manager.Messenger.MessageSent += CbusMessageSent;
             } else {
                 _manager.Messenger.MessageReceived -= CbusMessageReceived;
+                _manager.Messenger.MessageSent -= CbusMessageSent;
             }
 
             SendCbusConnectionStatus();
@@ -58,7 +63,12 @@ namespace FcuCore.Web {
 
         private async void CbusMessageReceived(object sender, CbusMessageEventArgs args)
         {
-            await SendMessage(new {Type = "cbus", Message = args.Message});
+            await SendMessage(new {Type = "cbus", Message = args.Message, Direction = "received"});
+        }
+
+        private async void CbusMessageSent(object sender, CbusMessageEventArgs args)
+        {
+            await SendMessage(new {Type = "cbus", Message = args.Message, Direction = "sent"});
         }
 
         private async Task SendCbusConnectionStatus()

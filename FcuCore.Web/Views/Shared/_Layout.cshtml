@@ -70,9 +70,11 @@
         <div class="col-2">
             <div class="debug-view">
                 <!-- ko foreach: status.receivedMessagesBuffer -->
+
                 <div>
-                    <span data-bind="text: DisplayString"></span>
-                    <pre data-bind="text: TransportString"></pre>
+                    <i class="fa" data-bind="css: {'fa-arrow-left': Direction == 'received', 'fa-arrow-right': Direction == 'sent'}"></i>
+                    <span data-bind="text: Message.DisplayString"></span>
+                    <pre data-bind="text: Message.TransportString"></pre>
                 </div>
                 <!-- /ko -->
             </div>
