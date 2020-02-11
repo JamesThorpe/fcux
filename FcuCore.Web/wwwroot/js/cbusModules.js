@@ -25,8 +25,9 @@
                 const module = new CbusModule(msg.CanId, md);
                 module.IsConsumerNode = msg.IsConsumerNode;
                 module.IsProducerNode = msg.IsProducerNode;
-                module.IsFlimMode = msg.InFlimMode;
+                module.InFlimMode = msg.InFlimMode;
                 module.SupportsBootloader = msg.SupportsBootloader;
+                cbus.modules.list.remove(m => m.CanId === module.CanId);
                 cbus.modules.list.push(module);
                 break;
             }
