@@ -1,0 +1,4 @@
+Cbus dev guide:
+https://www.merg.org.uk/merg_wiki/lib/exe/fetch.php?media=cbus:developer_6b.pdf
+
+Enumerate all nodes - 7.2.8
