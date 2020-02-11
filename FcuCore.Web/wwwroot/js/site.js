@@ -5,7 +5,8 @@
 
 var socket = new WebSocket("ws://" + window.location.host + "/ws");
 socket.onmessage = (d) => {
-    console.log(d);
+    var msg = JSON.parse(d.data);
+    console.log(msg);
 };
 
 $('#open-comms').click(function() {

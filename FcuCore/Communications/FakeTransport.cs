@@ -1,13 +1,25 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using FcuCore.Communications.Opcodes;
 
 namespace FcuCore.Communications {
     public class FakeTransport : ITransport {
         public event EventHandler<BytesReceivedEventArgs> BytesReceived;
         public async Task SendBytes(byte[] bytes)
         {
-            
+            var msg = Encoding.ASCII.GetString(bytes);
+            var cmsg = CbusMessage.FromTransportString(msg);
+            switch (cmsg.OpCode) {
+                case CbusOpCodes.QueryAllNodes:
+                    await Task.Delay(500);
+                    BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB060NB60102A5080D;")));
+                    await Task.Delay(100);
+                    BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB020NB60100A5050F;")));
+                    await Task.Delay(100);
+                    BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB040NB60101A5050F;")));
+                    break;
+            }
         }
 
         public FakeTransport()

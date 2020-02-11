@@ -1,12 +1,13 @@
 ﻿using System;
+using FcuCore.Communications.Opcodes;
 
 namespace FcuCore.Communications {
     [AttributeUsage(AttributeTargets.Class)]
     public class CbusMessageAttribute:Attribute
     {
-        public byte OpCode { get; }
+        public CbusOpCodes OpCode { get; }
 
-        public CbusMessageAttribute(byte opCode)
+        public CbusMessageAttribute(CbusOpCodes opCode)
         {
             OpCode = opCode;
         }

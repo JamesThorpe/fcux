@@ -43,6 +43,11 @@ namespace FcuCore.Communications
 
         public async Task<bool> SendMessage(CbusMessage message)
         {
+            //TODO: make configurable
+            message.CanId = 125;
+            message.MinorPriority = MinorPriority.Normal;
+            message.MajorPriority = MajorPriority.Low;
+
             await _transport.SendBytes(Encoding.ASCII.GetBytes(message.TransportString));
             return true;
         }

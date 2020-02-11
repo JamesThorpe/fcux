@@ -24,10 +24,10 @@ namespace FcuCore
 
         public void OpenComms()
         {
-            //Messenger = new CbusMessenger(new FakeTransport());
-            var t = new SerialPortTransport("COM5");
-            t.Open();
-            Messenger = new CbusMessenger(t);
+            Messenger = new CbusMessenger(new FakeTransport());
+            //var t = new SerialPortTransport("COM5");
+            //t.Open();
+            //Messenger = new CbusMessenger(t);
             ConnectionState = CbusConnectionState.Connected;
         }
 

@@ -12,9 +12,11 @@ namespace FcuCore.Communications.Opcodes
     //:SB020NB60100A5050F - ace8c
     //:SB040NB60101A5050F - ace8c
 
-    [CbusMessage(0x0D)]
+    [CbusMessage(CbusOpCodes.QueryAllNodes)]
     public class MessageQueryAllNodes:CbusMessage
     {
+        public MessageQueryAllNodes():base(CbusOpCodes.QueryAllNodes) { }
+
         public override string DisplayString => "Query all nodes";
     }
 }
