@@ -10,6 +10,8 @@ namespace FcuCore
         private CbusConnectionState _connectionState = CbusConnectionState.Disconnected;
         public ICbusMessenger Messenger { get; private set; }
 
+        public CommunicationSettings CommsSettings { get; set; } = new CommunicationSettings();
+
         public CbusConnectionState ConnectionState {
             get => _connectionState;
             set {
@@ -24,10 +26,20 @@ namespace FcuCore
 
         public void OpenComms()
         {
-            Messenger = new CbusMessenger(new FakeTransport());
-            //var t = new SerialPortTransport("COM5");
-            //t.Open();
-            //Messenger = new CbusMessenger(t);
+            ITransport transport;
+            switch (CommsSettings.Transport) {
+                case CommunicationSettings.TransportProviders.Test:
+                    transport = new FakeTransport();
+                    break;
+                case CommunicationSettings.TransportProviders.Serial:
+                    var spt = new SerialPortTransport(CommsSettings.SerialPort);
+                    spt.Open();
+                    transport = spt;
+                    break;
+                default:
+                    throw new InvalidOperationException("No valid transport configured");
+            }
+            Messenger = new CbusMessenger(transport);
             ConnectionState = CbusConnectionState.Connected;
         }
 

@@ -36,6 +36,20 @@ namespace FcuCore.Web.Controllers.Api
                     break;
             }
         }
+
+        [HttpGet("ConfigureComms")]
+        public IActionResult ConfigureComms()
+        {
+            
+            return new JsonResult(_manager.CommsSettings);
+        }
+
+        [HttpPost("ConfigureComms")]
+        public IActionResult ConfigureComms(CommunicationSettings settings)
+        {
+            _manager.CommsSettings = settings;
+            return Ok();
+        }
     }
 
     

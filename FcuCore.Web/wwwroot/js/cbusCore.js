@@ -10,31 +10,59 @@
     };
 
     cbus.api = {
-        sendApiRequest: (controller, action, data) => {
-            $.ajax({
+        readApi: (controller, action) => {
+            return $.ajax({
                 url: `/api/${controller}/${action}`,
-                data: data,
+                method: "GET",
+                dataType: "JSON"
+            });
+        },
+        sendApiRequest: (controller, action, data) => {
+            return $.ajax({
+                url: `/api/${controller}/${action}`,
+                data: JSON.stringify(data),
                 contentType: 'application/json',
-                method: 'POST'
+                method: "POST"
             });
         },
         sendQNN: () => {
-            cbus.api.sendApiRequest("Manager", "Communications", '"enumerate"');
+            cbus.api.sendApiRequest("Manager", "Communications", "enumerate");
         }
     };
 
     const messageHandlers = [];
     cbus.comms = {
         connect: () => {
-            cbus.api.sendApiRequest("Manager", "Communications",'"open"');
+            cbus.api.sendApiRequest("Manager", "Communications","open");
         },
         disconnect: () => {
-            cbus.api.sendApiRequest("Manager", "Communications",'"close"');
+            cbus.api.sendApiRequest("Manager", "Communications","close");
         },
         addHandler: (opCode, handler) => {
             messageHandlers.push({ opCode: opCode, handler: handler });
+        },
+        configure: () => {
+            cbus.api.readApi("Manager", "ConfigureComms").done((d) => {
+                cbus.comms.transport(d.transport);
+                cbus.comms.serialPort(d.serialPort);
+                $("#dialog-configure-comms").modal("show");
+            });
+        },
+        transport: ko.observable('Serial'),
+        serialPort: ko.observable(''),
+        closeConfigure: () => {
+            $("#dialog-configure-comms").modal("hide");
+        },
+        saveConfigure: () => {
+            cbus.api.sendApiRequest("Manager", "ConfigureComms", {
+                transport: cbus.comms.transport(),
+                serialPort: cbus.comms.serialPort()
+                });
+            $("#dialog-configure-comms").modal("hide");
         }
     };
+
+
 
 
     const socket = new WebSocket("ws://" + window.location.host + "/ws");
