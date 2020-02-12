@@ -34,6 +34,8 @@ namespace FcuCore.Communications
                     BytesReceived?.Invoke(this, new BytesReceivedEventArgs(buffer.Take(read).ToArray()));
                 } catch (TaskCanceledException) {
                     //ok
+                } catch (Exception e) {
+
                 }
             }
         }
@@ -53,6 +55,8 @@ namespace FcuCore.Communications
                 await _port.BaseStream.WriteAsync(bytes, 0, bytes.Length, _cts.Token);
             } catch (TaskCanceledException) {
                 //ok
+            } catch (Exception e) {
+
             }
         }
     }

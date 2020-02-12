@@ -2,6 +2,7 @@
 
     function nodeVariable(group, nv, node) {
         this.group = group;
+        this.index = nv.index;
         this.nv = nv;
         this.definition = ko.computed(() => {
             if (nv.definition) {
@@ -29,6 +30,24 @@
         this.isProducerNode = config.IsProducerNode;
         this.inFlimMode = config.InFlimMode;
         this.supportsBootloader = config.SupportsBootloader;
+
+        this.params = ko.observableArray([]);
+
+        this.minorVersion = ko.computed(() => {
+            return String.fromCharCode(this.params()[2]);
+        });
+
+        this.majorVersion = ko.computed(() => {
+            return this.params()[7];
+        });
+
+        this.version = ko.computed(() => {
+            return `${this.majorVersion()}${this.minorVersion()}`;
+        });
+
+        this.supportedNodeVariables = ko.computed(() => {
+            return this.params()[6];
+        });
 
         this.nodeVariables = ko.observableArray();
         type.configGroups.forEach(cg => {
@@ -58,11 +77,33 @@
         $("#dialog-edit-node-variables").modal("hide");
         cbus.modules.currentNode(null);
     };
-
+    node.prototype.readNodeVariables = function() {
+        cbus.api.sendApiRequest("Manager",
+            "ReadNodeVariables",
+            {
+                NodeNumber: this.nodeNumber,
+                VariableCount: this.supportedNodeVariables()
+            });
+    };
+    node.prototype.getNodeVariableByIndex = function (i) {
+        for (var x in this.nodeVariables()) {
+            if (this.nodeVariables()[x].index === i) {
+                return this.nodeVariables()[x];
+            }
+        }
+        return null;
+    };
     cbus.modules = {
         definitions: {},
         list: ko.observableArray(),
-        currentNode: ko.observable(null)
+        currentNode: ko.observable(null),
+        getByNodeNumber: (n) => {
+            var f = cbus.modules.list().filter(m => m.nodeNumber === n);
+            if (f.length) {
+                return f[0];
+            }
+            return null;
+        }
     };
 
     cbus.comms.addHandler(0xB6, (msg) => {
@@ -76,5 +117,20 @@
             }
         }
     });
+
+    cbus.comms.addHandler(0x9B, (msg) => {
+        var n = cbus.modules.getByNodeNumber(msg.NodeNumber);
+        n.params()[msg.ParameterIndex] = msg.ParameterValue;
+        n.params.notifySubscribers();
+    });
+
+    cbus.comms.addHandler(0x97,
+        (msg) => {
+            var n = cbus.modules.getByNodeNumber(msg.NodeNumber);
+            var nv = n.getNodeVariableByIndex(msg.VariableIndex);
+            if (nv != null) {
+                nv.value(msg.VariableValue);
+            }
+        });
 
 })(window.cbus);

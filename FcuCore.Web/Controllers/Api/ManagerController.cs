@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using FcuCore.Communications;
 using FcuCore.Communications.Opcodes;
+using FcuCore.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +24,7 @@ namespace FcuCore.Web.Controllers.Api
         }
 
         [HttpPost("Communications")]
-        public void Communications([FromBody]string action)
+        public async Task Communications([FromBody]string action)
         {
             
             switch (action) {
@@ -32,9 +36,56 @@ namespace FcuCore.Web.Controllers.Api
                     break;
                 case "enumerate":
                     var msg = new MessageQueryAllNodes();
-                    _manager.Messenger.SendMessage(msg);
+
+                    _manager.Messenger.MessageReceived += MessengerOnMessageReceivedEnumerateNodes;
+                    await _manager.Messenger.SendMessage(msg);
+                    await Task.Delay(3000);
+                    _manager.Messenger.MessageReceived -= MessengerOnMessageReceivedEnumerateNodes;
+
                     break;
             }
+        }
+
+        [HttpPost("ReadNodeVariables")]
+        public async Task ReadNodeVariables(ReadNodeVariablesRequest request)
+        {
+            for (byte x = 0; x < request.VariableCount; x++) {
+                var m = new MessageReadNodeVariables {
+                    NodeNumber = request.NodeNumber,
+                    VariableIndex = x
+                };
+                await _manager.Messenger.SendMessage(m);
+            }
+        }
+
+        private async void MessengerOnMessageReceivedEnumerateNodes(object sender, CbusMessageEventArgs e)
+        {
+            try {
+                switch (e.Message) {
+                    case MessageResponseToQueryNode msg:
+                        var m = new MessageRequestReadOfNodeParameterByIndex {
+                            ParameterIndex = 0,
+                            NodeNumber = msg.NodeNumber
+                        };
+                        await _manager.Messenger.SendMessage(m);
+                        break;
+                    case MessageNodeParameterResponse msg:
+                        if (msg.ParameterIndex == 0) {
+                            for (byte x = 1; x < msg.ParameterValue; x++) {
+                                var m2 = new MessageRequestReadOfNodeParameterByIndex {
+                                    ParameterIndex = x,
+                                    NodeNumber = msg.NodeNumber
+                                };
+                                await _manager.Messenger.SendMessage(m2);
+                            }
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex) {
+
+            }
+
         }
 
         [HttpGet("ConfigureComms")]

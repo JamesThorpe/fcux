@@ -30,7 +30,7 @@ namespace FcuCore.Communications {
         }
 
         public FrameTypes FrameType { get; private set; }
-        public byte[] Data { get; private set; }
+        public byte[] Data { get; protected set; }
         public byte SidH { get; private set; }
         public byte SidL { get; private set; }
         public CbusOpCodes OpCode { get; }
