@@ -7,8 +7,11 @@ namespace FcuCore.Communications.Opcodes
     public enum CbusOpCodes
     {
         QueryAllNodes = 0x0D,
+        RQNPN = 0x73,
         AcOn = 0x90,
         AcOff = 0x91,
-        ResponseToQueryNode = 0xB6
+        PARAN = 0x9B,
+        ResponseToQueryNode = 0xB6,
+        
     }
 }
