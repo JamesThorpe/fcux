@@ -5,7 +5,7 @@
     configGroups: [
         {
             name: "General",
-            nodeValues: [
+            nodeVariables: [
                 {
                     index: 1,
                     definition: {

@@ -27,6 +27,7 @@
 
 <partial name="Menu" />
 <partial name="~/Views/Dialogs/ConfigureComms.cshtml" />
+<partial name="/Views/Dialogs/EditNodeVariables.cshtml" />
 
 <div class="container-fluid">
     <div class="row">
@@ -83,6 +84,8 @@
 
 <environment include="Development">
     <script src="~/js/TinyPubSub.js" asp-append-version="true"></script>
+    <script src="~/js/ko-bitmask.js" asp-append-version="true"></script>
+    <script src="~/js/ko-number.js" asp-append-version="true"></script>
     <script src="~/js/cbusCore.js" asp-append-version="true"></script>
     <script src="~/js/cbusModules.js" asp-append-version="true"></script>
     <script src="~/js/modules/canacc4.js" asp-append-version="true"></script>

@@ -1,0 +1,78 @@
+﻿<div class="modal" tabindex="-1" role="dialog" id="dialog-edit-node-variables" data-backdrop="static">
+    <!-- ko with: modules.currentNode -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Node Variables</h5>
+            </div>
+            <div class="modal-body">
+                <div class="node-header">
+                    <div class="node-info">
+                        <span>Node Number</span>
+                        <span data-bind="text: nodeNumber"></span>
+                    </div>
+                    <div class="node-info">
+                        <span>CAN ID</span>
+                        <span data-bind="text: canId"></span>
+                    </div>
+                    <div class="node-info">
+                        <span>Type</span>
+                        <span data-bind="text: nodeType.name"></span>
+                    </div>
+                </div>
+
+                <!-- ko foreach: nodeType.configGroups -->
+                <div class="config-group">
+                    <h3 data-bind="text: name"></h3>
+                    <!-- ko foreach: $parent.getValuesInGroup($data) -->
+                    <div>
+                        <span class="node-variable-index" data-bind="text: nv.index"></span>
+                        <!-- ko template: {name: 'nodevariable-tmpl-' + definition().type, data: $data} -->
+                        <!-- /ko -->
+
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <!-- /ko -->
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bind="click: closeEditNodeVariables">Close</button>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+
+
+<script type="text/html" id="nodevariable-tmpl-numeric">
+    <label>
+        <input type="number" data-bind="number: value" min="0" max="255">
+        <span data-bind="text: definition().name"></span>
+    </label>
+</script>
+
+<script type="text/html" id="nodevariable-tmpl-bitfield">
+    <input type="checkbox" data-bind="bitmask: value, bit: 128" />
+    <input type="checkbox" data-bind="bitmask: value, bit: 64" />
+    <input type="checkbox" data-bind="bitmask: value, bit: 32" />
+    <input type="checkbox" data-bind="bitmask: value, bit: 16" />
+    <input type="checkbox" data-bind="bitmask: value, bit: 8" />
+    <input type="checkbox" data-bind="bitmask: value, bit: 4" />
+    <input type="checkbox" data-bind="bitmask: value, bit: 2" />
+    <input type="checkbox" data-bind="bitmask: value, bit: 1" />
+    <span data-bind="text: definition().name"></span>
+</script>
+
+<script type="text/html" id="nodevariable-tmpl-select">
+    <select data-bind="value: value, options: definition().selectValues, optionsText: 'name', optionsValue: 'value'"></select>
+    <span data-bind="text: definition().name"></span>
+</script>
+
+<script type="text/html" id="nodevariable-tmpl-flags">
+    <!-- ko foreach: definition().flagValues -->
+    <label><input type="checkbox" data-bind="bitmask: $parent.value, bit: value"><span data-bind="text: name"></span></label>
+    <!-- /ko -->
+    <span data-bind="text: definition().name"></span>
+</script>

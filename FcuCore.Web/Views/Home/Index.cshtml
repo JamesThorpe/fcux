@@ -5,68 +5,32 @@
 <!-- ko foreach: modules.list-->
 
 <div class="node">
-    <span data-bind="text: nodeNumber"></span>
-    <span data-bind="text: canId"></span>/<span data-bind="text: nodeType.name"></span>
-    <div class="features">
-        <i class="fa fa-sign-out" data-bind="css: { 'module-feature': isProducerNode}"></i>
-        <i class="fa fa-sign-in" data-bind="css: { 'module-feature': isConsumerNode}"></i>
-        <i class="fa fa-cogs" data-bind="css: {'module-feature' : inFlimMode}"></i>
-        <i class="fa fa-upload" data-bind="css: {'module-feature' : supportsBootloader}"></i>
-    </div>
-
-
-    <button type="button" class="btn btn-sm" data-bind="click: toggleNodeValues, css: {'btn-outline-primary': !displayNodeValues(), 'btn-primary':displayNodeValues()}">Toggle Node Values</button>
-
-    <!-- ko if: displayNodeValues -->
-    <!-- ko foreach: nodeType.configGroups -->
-    <div class="config-group">
-        <h3 data-bind="text: name"></h3>
-        <!-- ko foreach: $parent.getValuesInGroup($data) -->
-        <div>
-            <span class="node-value-index" data-bind="text: nv.index"></span>
-            <!-- ko template: {name: 'nodevalue-tmpl-' + definition().type, data: $data} -->
-            <!-- /ko -->
-
+    <div class="node-header">
+        <div class="node-info">
+            <span>Node Number</span>
+            <span data-bind="text: nodeNumber"></span>
         </div>
-        <!-- /ko -->
-    </div>
-    <!-- /ko -->
-    <button type="button" class="btn btn-sm btn-primary" data-bind="click: readNodeValues">Read NVs</button>
-    <button type="button" class="btn btn-sm btn-danger" data-bind="click: writeNodeValues">Write NVs</button>
+        <div class="node-info">
+            <span>CAN ID</span>
+            <span data-bind="text: canId"></span>
+        </div>
+        <div class="node-info">
+            <span>Type</span>
+            <span data-bind="text: nodeType.name"></span>
+        </div>
 
-    <!-- /ko -->
+        <div class="features">
+            <i class="fa fa-sign-out" data-bind="css: { 'module-feature': isProducerNode}"></i>
+            <i class="fa fa-sign-in" data-bind="css: { 'module-feature': isConsumerNode}"></i>
+            <i class="fa fa-cogs" data-bind="css: {'module-feature' : inFlimMode}"></i>
+            <i class="fa fa-upload" data-bind="css: {'module-feature' : supportsBootloader}"></i>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-sm btn-secondary" data-bind="click: editNodeVariables">Node Variables</button>
+
 </div>
 
 <!-- /ko -->
 
 
-<script type="text/html" id="nodevalue-tmpl-numeric">
-    <label>
-        <input type="number" data-bind="value: value" min="0" max="255">
-        <span data-bind="text: definition().name"></span>
-    </label>
-</script>
-
-<script type="text/html" id="nodevalue-tmpl-bitfield">
-    <input type="checkbox">
-    <input type="checkbox">
-    <input type="checkbox">
-    <input type="checkbox">
-    <input type="checkbox">
-    <input type="checkbox">
-    <input type="checkbox">
-    <input type="checkbox">
-    <span data-bind="text: definition().name"></span>
-</script>
-
-<script type="text/html" id="nodevalue-tmpl-select">
-    <select data-bind="value: value, options: definition().selectValues, optionsText: 'name', optionsValue: 'value'"></select>
-    <span data-bind="text: definition().name"></span>
-</script>
-
-<script type="text/html" id="nodevalue-tmpl-flags">
-    <!-- ko foreach: definition().flagValues -->
-    <label><input type="checkbox"><span data-bind="text: name"></span></label>
-    <!-- /ko -->
-    <span data-bind="text: definition().name"></span>
-</script>

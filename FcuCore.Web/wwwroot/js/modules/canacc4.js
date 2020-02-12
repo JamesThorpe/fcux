@@ -5,7 +5,7 @@
     configGroups: [
         {
             name: "General",
-            nodeValues: [{
+            nodeVariables: [{
                 index: 9,
                 definition: {
                     name: "Recharge Time",
@@ -22,7 +22,7 @@
             }]
         }, {
             name: "Output Timings",
-            nodeValues: [
+            nodeVariables: [
                 {
                     index: 1,
                     definition: {

@@ -1,6 +1,6 @@
 ﻿(function (cbus) {
 
-    function nodeValue(group, nv, node) {
+    function nodeVariable(group, nv, node) {
         this.group = group;
         this.nv = nv;
         this.definition = ko.computed(() => {
@@ -30,45 +30,39 @@
         this.inFlimMode = config.InFlimMode;
         this.supportsBootloader = config.SupportsBootloader;
 
-        this.nodeValues = ko.observableArray();
+        this.nodeVariables = ko.observableArray();
         type.configGroups.forEach(cg => {
-            cg.nodeValues.forEach(nv => {
-                this.nodeValues.push(new nodeValue(cg, nv, this));
+            cg.nodeVariables.forEach(nv => {
+                this.nodeVariables.push(new nodeVariable(cg, nv, this));
             });
         });
-
-        this.displayNodeValues = ko.observable(false);
     }
 
     node.prototype.getValuesInGroup = function (group) {
-        return this.nodeValues().filter((nv) => nv.group === group);
+        return this.nodeVariables().filter((nv) => nv.group === group);
     };
 
-    node.prototype.getNodeValue = function (index) {
-        const nv = this.nodeValues().find((nv) => nv.nv.index === index);
+    node.prototype.getNodeVariable = function (index) {
+        const nv = this.nodeVariables().find((nv) => nv.nv.index === index);
         if (nv != null) {
             return nv.value();
         }
         return null;
     };
-    node.prototype.toggleNodeValues = function () {
-        this.displayNodeValues(!this.displayNodeValues());
+
+    node.prototype.editNodeVariables = function() {
+        cbus.modules.currentNode(this);
+        $("#dialog-edit-node-variables").modal("show");
     };
-
-    node.prototype.readNodeValues = function () {
-
+    node.prototype.closeEditNodeVariables = function() {
+        $("#dialog-edit-node-variables").modal("hide");
+        cbus.modules.currentNode(null);
     };
-    node.prototype.writeNodeValues = function () {
-
-    };
-
-
-
-
 
     cbus.modules = {
         definitions: {},
-        list: ko.observableArray()
+        list: ko.observableArray(),
+        currentNode: ko.observable(null)
     };
 
     cbus.comms.addHandler(0xB6, (msg) => {

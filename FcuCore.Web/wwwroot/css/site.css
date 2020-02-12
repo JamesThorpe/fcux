@@ -57,6 +57,9 @@ div.node {
     border-radius: 5px;
     margin: 15px;
     padding: 15px;
+}
+
+div.node div.node-header {
     position: relative;
 }
 
@@ -64,6 +67,17 @@ div.node div.features {
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+div.node-header div.node-info {
+    display: inline-block;
+}
+
+div.node-header div.node-info span:first-child {
+    font-variant: small-caps;
+    font-size: 11px;
+    color: #a0a0a0;
+    font-weight: bold;
 }
 
 div.config-group {
@@ -79,7 +93,8 @@ div.config-group input:invalid {
     border-color: red;
 }
 
-span.node-value-index {
+span.node-variable-index {
     width: 30px;
     display: inline-block;
 }
+
