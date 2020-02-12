@@ -52,16 +52,34 @@ div.features .module-feature {
     color: #046b04;
 }
 
-div.cbus-module {
+div.node {
     border: 1px solid #dee2e6;
-    border-radius: 3px;
+    border-radius: 5px;
     margin: 15px;
     padding: 15px;
     position: relative;
 }
 
-div.cbus-module div.features {
+div.node div.features {
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+div.config-group {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+div.config-group h3 {
+    font-size: 13px;
+}
+
+div.config-group input:invalid {
+    border-color: red;
+}
+
+span.node-value-index {
+    width: 30px;
+    display: inline-block;
 }
