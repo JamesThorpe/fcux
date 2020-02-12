@@ -12,7 +12,7 @@ namespace FcuCore.Communications {
                 var msg = Encoding.ASCII.GetString(bytes);
                 var cmsg = CbusMessage.FromTransportString(msg);
                 switch (cmsg.OpCode) {
-                    case CbusOpCodes.QueryAllNodes:
+                    case CbusOpCodes.QNN:
                         await Task.Delay(500);
                         BytesReceived?.Invoke(this,
                             new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB060NB60102A5080D;")));

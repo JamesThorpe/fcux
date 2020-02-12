@@ -1,10 +1,10 @@
 ﻿using FcuCore.Communications.Opcodes;
 
 namespace FcuCore.Communications {
-    [CbusMessage(CbusOpCodes.ResponseToQueryNode)]
+    [CbusMessage(CbusOpCodes.PNN)]
     public class MessageResponseToQueryNode:MessageNode
     {
-        public MessageResponseToQueryNode() : base(CbusOpCodes.ResponseToQueryNode) { }
+        public MessageResponseToQueryNode() : base(CbusOpCodes.PNN) { }
 
         public byte ManufacturerId => Data[2];
         public byte ModuleId => Data[3];

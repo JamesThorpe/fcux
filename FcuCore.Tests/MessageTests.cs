@@ -10,7 +10,7 @@ namespace Tests
         [Test]
         public void IsCanIdStoredAndRetrievedCorrectly()
         {
-            var c = new CbusMessage(CbusOpCodes.AcOn) {
+            var c = new CbusMessage(CbusOpCodes.ACON) {
                 CanId = 125
             };
             Assert.AreEqual(125, c.CanId);
@@ -19,7 +19,7 @@ namespace Tests
         [Test]
         public void IsMajorPriorityStoredAndRetrievedCorrectly()
         {
-            var c = new CbusMessage(CbusOpCodes.AcOn) {MajorPriority = MajorPriority.Low};
+            var c = new CbusMessage(CbusOpCodes.ACON) {MajorPriority = MajorPriority.Low};
             Assert.AreEqual(MajorPriority.Low, c.MajorPriority);
             c.MajorPriority = MajorPriority.Medium;
             Assert.AreEqual(MajorPriority.Medium, c.MajorPriority);
@@ -30,7 +30,7 @@ namespace Tests
         [Test]
         public void IsMinorPriorityStoredAndRetrievedCorrectly()
         {
-            var c = new CbusMessage(CbusOpCodes.AcOn) {
+            var c = new CbusMessage(CbusOpCodes.ACON) {
                 MinorPriority = MinorPriority.Low
             };
             Assert.AreEqual(MinorPriority.Low, c.MinorPriority);
@@ -45,7 +45,7 @@ namespace Tests
         [Test]
         public void EnsurePriorityAndCanIdPlayNicely()
         {
-            var c = new CbusMessage(CbusOpCodes.AcOn) {
+            var c = new CbusMessage(CbusOpCodes.ACON) {
                 CanId = 125,
                 MajorPriority = MajorPriority.Medium,
                 MinorPriority = MinorPriority.AboveNormal

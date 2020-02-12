@@ -50,7 +50,7 @@ namespace FcuCore.Web.Controllers.Api
         public async Task ReadNodeVariables(ReadNodeVariablesRequest request)
         {
             for (byte x = 0; x < request.VariableCount; x++) {
-                var m = new MessageReadNodeVariables {
+                var m = new MessageReadNodeVariable {
                     NodeNumber = request.NodeNumber,
                     VariableIndex = x
                 };
