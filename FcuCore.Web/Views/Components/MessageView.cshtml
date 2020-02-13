@@ -1,0 +1,17 @@
+﻿<!-- ko if: status.showMessages -->
+<div class="col-2">
+    <div class="debug-view">
+        <!-- ko foreach: status.receivedMessagesBuffer -->
+
+        <div>
+            <i class="fa" data-bind="css: {'fa-arrow-left': Direction == 'received', 'fa-arrow-right': Direction == 'sent'}"></i>
+            <span class="debug-view-opcode">
+                <span data-bind="text: Message.OpCodeString"></span>(<span data-bind="text: '0x'+('0' + (Message.OpCode & 0xFF).toString(16).toUpperCase()).slice(-2)"></span>)
+            </span>
+            <span class="debug-view-transport" data-bind="text: Message.TransportString"></span>
+            <span class="debug-view-display" data-bind="text: Message.DisplayString"></span>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<!-- /ko -->

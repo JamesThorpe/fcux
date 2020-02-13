@@ -35,6 +35,8 @@ namespace FcuCore.Communications {
         public byte SidL { get; private set; }
         public CbusOpCodes OpCode { get; }
 
+        public string OpCodeString => OpCode.ToString();
+
         public MajorPriority MajorPriority {
             get => (MajorPriority) (SidH >> 6);
             set => SidH = (byte) (((byte)value << 6) + (SidH & 0x3f));

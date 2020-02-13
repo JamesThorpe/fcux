@@ -34,11 +34,19 @@
         this.params = ko.observableArray([]);
 
         this.minorVersion = ko.computed(() => {
-            return String.fromCharCode(this.params()[2]);
+            if (this.params()[2] !== undefined) {
+                return String.fromCharCode(this.params()[2]);
+            } else {
+                return "?";
+            }
         });
 
         this.majorVersion = ko.computed(() => {
-            return this.params()[7];
+            if (this.params()[7] !== undefined) {
+                return this.params()[7];
+            } else {
+                return "";
+            }
         });
 
         this.version = ko.computed(() => {
@@ -61,7 +69,7 @@
         return this.nodeVariables().filter((nv) => nv.group === group);
     };
 
-    node.prototype.getNodeVariable = function (index) {
+    node.prototype.getNodeVariableValue = function (index) {
         const nv = this.nodeVariables().find((nv) => nv.nv.index === index);
         if (nv != null) {
             return nv.value();
@@ -86,16 +94,15 @@
             });
     };
     node.prototype.getNodeVariableByIndex = function (i) {
-        for (var x in this.nodeVariables()) {
-            if (this.nodeVariables()[x].index === i) {
-                return this.nodeVariables()[x];
-            }
-        }
-        return null;
+        const nv = this.nodeVariables().find((n) => n.index === i);
+        return nv ? nv : null;
     };
+
+
     cbus.modules = {
         definitions: {},
         list: ko.observableArray(),
+        listFilter: ko.observable(''),
         currentNode: ko.observable(null),
         getByNodeNumber: (n) => {
             var f = cbus.modules.list().filter(m => m.nodeNumber === n);
@@ -106,7 +113,18 @@
         }
     };
 
-    cbus.comms.addHandler(0xB6, (msg) => {
+    cbus.modules.filteredList = ko.computed(() => {
+        if (cbus.modules.listFilter() === "")
+            return cbus.modules.list();
+
+        return cbus.modules.list().filter((m) => {
+            return m.nodeNumber.toString().indexOf(cbus.modules.listFilter()) > -1 ||
+                m.nodeType.name.toUpperCase().indexOf(cbus.modules.listFilter().toUpperCase()) > -1;
+            
+        });
+    });
+
+    cbus.comms.addHandler("PNN", (msg) => {
         for (let m in cbus.modules.definitions) {
             const md = cbus.modules.definitions[m];
             if (md.manufacturerId === msg.ManufacturerId && md.moduleId === msg.ModuleId) {

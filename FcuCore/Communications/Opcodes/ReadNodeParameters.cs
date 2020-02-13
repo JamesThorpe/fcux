@@ -19,7 +19,7 @@ namespace FcuCore.Communications.Opcodes
             set => Data[2] = value;
         }
 
-        public override string DisplayString => $"RQNPN/Read Node Parameter, Node Number: {NodeNumber}, Param Index: {ParameterIndex}";
+        public override string DisplayString => $"Read Node Parameter, Node Number: {NodeNumber}, Param Index: {ParameterIndex}";
     }
 
 
@@ -44,7 +44,7 @@ namespace FcuCore.Communications.Opcodes
         }
 
         public override string DisplayString =>
-            $"PARAN/Read Parameter Response, Node Number: {NodeNumber}, Param Index: {ParameterIndex}, Param Value: {ParameterValue}";
+            $"Read Parameter Response, Node Number: {NodeNumber}, Param Index: {ParameterIndex}, Param Value: {ParameterValue}";
     }
 
 }

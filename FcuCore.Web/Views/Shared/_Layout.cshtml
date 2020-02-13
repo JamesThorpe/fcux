@@ -36,20 +36,8 @@
                 @RenderBody()
             </main>
         </div>
-        <!-- ko if: status.showMessages -->
-        <div class="col-2">
-            <div class="debug-view">
-                <!-- ko foreach: status.receivedMessagesBuffer -->
+        <partial name="/Views/Components/MessageView.cshtml" />
 
-                <div>
-                    <i class="fa" data-bind="css: {'fa-arrow-left': Direction == 'received', 'fa-arrow-right': Direction == 'sent'}"></i>
-                    <span data-bind="text: Message.DisplayString"></span>
-                    <pre data-bind="text: Message.TransportString"></pre>
-                </div>
-                <!-- /ko -->
-            </div>
-        </div>
-        <!-- /ko -->
     </div>
 
 </div>

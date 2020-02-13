@@ -1,0 +1,45 @@
+﻿
+
+<h5>Node List</h5>
+
+
+<table class="node-table">
+    <thead>
+    <tr>
+        <th class="info-cell">Node Number</th>
+        <th class="info-cell">CAN ID</th>
+        <th class="info-cell">Version</th>
+        <th class="info-cell">Type</th>
+        <th colspan="2">
+            <label>Filter: <input data-bind="textInput: modules.listFilter" /></label>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        <!-- ko foreach: modules.filteredList -->
+        <tr>
+            <td class="info-cell" data-bind="text: nodeNumber"></td>
+            <td class="info-cell" data-bind="text: canId"></td>
+            <td class="info-cell" data-bind="text: version"></td>
+            <td class="info-cell" data-bind="text: nodeType.name"></td>
+            <td>
+                <button type="button" class="btn btn-sm btn-secondary" data-bind="click: editNodeVariables"><i class="fa fa-pencil-square-o"></i> Node Variables</button>
+            </td>
+            <td>
+                <div class="node-features">
+                    <i class="fa fa-sign-out" data-bind="css: { 'module-feature': isProducerNode}"></i>
+                    <i class="fa fa-sign-in" data-bind="css: { 'module-feature': isConsumerNode}"></i>
+                    <i class="fa fa-cogs" data-bind="css: {'module-feature' : inFlimMode}"></i>
+                    <i class="fa fa-upload" data-bind="css: {'module-feature' : supportsBootloader}"></i>
+                </div>
+            </td>
+        </tr>
+        <!-- /ko -->
+        <!-- ko if: modules.filteredList().length < modules.list().length -->
+        <tr>
+            <td colspan="6">Filtered to <span data-bind="text:modules.filteredList().length"></span> of <span data-bind="text:modules.list().length"></span> nodes</td>
+        </tr>
+        <!-- /ko -->
+    </tbody>
+</table>
+

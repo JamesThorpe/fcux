@@ -18,7 +18,7 @@ namespace FcuCore.Communications.Opcodes
         }
 
         public override string DisplayString =>
-            $"NVRD/Read Node Variable, Node Number: {NodeNumber}, Variable Index: {VariableIndex}";
+            $"Read Node Variable, Node Number: {NodeNumber}, Variable Index: {VariableIndex}";
     }
 
     [CbusMessage(CbusOpCodes.NVANS)]
@@ -39,6 +39,6 @@ namespace FcuCore.Communications.Opcodes
         }
 
         public override string DisplayString =>
-            $"NVANS/Read Variable Answer, Node Number: {NodeNumber}, Variable Index: {VariableIndex}, Value: {VariableValue}";
+            $"Read Variable Answer, Node Number: {NodeNumber}, Variable Index: {VariableIndex}, Value: {VariableValue}";
     }
 }

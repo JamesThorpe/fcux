@@ -17,7 +17,7 @@ namespace FcuCore.Communications.Opcodes
     {
         public QueryAllNodesMessage():base(CbusOpCodes.QNN) { }
 
-        public override string DisplayString => "QNN/Query all nodes";
+        public override string DisplayString => "Query all nodes";
     }
 
 
@@ -34,6 +34,6 @@ namespace FcuCore.Communications.Opcodes
         public bool InFlimMode => (Data[4] & 0b0100) == 0b0100;
         public bool SupportsBootloader => (Data[4] & 0b1000) == 0b1000;
 
-        public override string DisplayString => $"PNN/Query Node Response, Manufacturer Id {ManufacturerId}, Module Id {ModuleId}";
+        public override string DisplayString => $"Query Node Response, Manufacturer Id {ManufacturerId}, Module Id {ModuleId}";
     }
 }

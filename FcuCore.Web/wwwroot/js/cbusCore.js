@@ -75,7 +75,7 @@
                     cbus.status.receivedMessagesBuffer.shift();
                 }
                 if (msg.Direction === "received") {
-                    var mh = messageHandlers.filter(handler => handler.opCode === msg.Message.OpCode);
+                    var mh = messageHandlers.filter(handler => handler.opCode === msg.Message.OpCode || handler.opCode === msg.Message.OpCodeString);
                     for (var x = 0; x < mh.length; x++) {
                         mh[x].handler(msg.Message);
                     }
