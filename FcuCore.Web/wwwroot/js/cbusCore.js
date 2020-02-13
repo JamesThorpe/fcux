@@ -98,5 +98,4 @@
 
     //TODO: reconnect socket, handle errors
 
-
 })(window, ko, jQuery);

@@ -6,9 +6,9 @@ using System.Text;
 namespace FcuCore.Communications.Opcodes
 {
     [CbusMessage(CbusOpCodes.RQNPN)]
-    public class MessageRequestReadOfNodeParameterByIndex: MessageNode
+    public class ReadNodeParameterByIndexMessage: CbusMessageWithNodeNumber
     {
-        public MessageRequestReadOfNodeParameterByIndex() : base(CbusOpCodes.RQNPN)
+        public ReadNodeParameterByIndexMessage() : base(CbusOpCodes.RQNPN)
         {
             Data = new byte[3];
         }
@@ -24,9 +24,9 @@ namespace FcuCore.Communications.Opcodes
 
 
     [CbusMessage(CbusOpCodes.PARAN)]
-    public class MessageNodeParameterResponse : MessageNode
+    public class ReadNodeParameterByIndexResponseMessage : CbusMessageWithNodeNumber
     {
-        public MessageNodeParameterResponse() : base(CbusOpCodes.PARAN)
+        public ReadNodeParameterByIndexResponseMessage() : base(CbusOpCodes.PARAN)
         {
             Data = new byte[4];
         }

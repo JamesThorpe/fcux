@@ -1,4 +1,4 @@
-﻿(function (cbus) {
+﻿(function (cbus, ko, $) {
 
     function nodeVariable(group, nv, node) {
         this.group = group;
@@ -133,4 +133,4 @@
             }
         });
 
-})(window.cbus);
+})(window.cbus, ko, jQuery);

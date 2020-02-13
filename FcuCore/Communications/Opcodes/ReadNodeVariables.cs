@@ -5,9 +5,9 @@ using System.Text;
 namespace FcuCore.Communications.Opcodes
 {
     [CbusMessage(CbusOpCodes.NVRD)]
-    public class MessageReadNodeVariable:MessageNode
+    public class ReadNodeVariableMessage : CbusMessageWithNodeNumber
     {
-        public MessageReadNodeVariable() : base(CbusOpCodes.NVRD)
+        public ReadNodeVariableMessage() : base(CbusOpCodes.NVRD)
         {
             Data = new byte[3];
         }
@@ -22,9 +22,9 @@ namespace FcuCore.Communications.Opcodes
     }
 
     [CbusMessage(CbusOpCodes.NVANS)]
-    public class MessageReadNodeVariablesAnswer : MessageNode
+    public class ReadNodeVariableAnswerMessage : CbusMessageWithNodeNumber
     {
-        public MessageReadNodeVariablesAnswer():base(CbusOpCodes.NVANS)
+        public ReadNodeVariableAnswerMessage():base(CbusOpCodes.NVANS)
         {
             Data = new byte[4];
         }

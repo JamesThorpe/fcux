@@ -35,7 +35,7 @@ namespace FcuCore.Web.Controllers.Api
                     _manager.CloseComms();
                     break;
                 case "enumerate":
-                    var msg = new MessageQueryAllNodes();
+                    var msg = new QueryAllNodesMessage();
 
                     _manager.Messenger.MessageReceived += MessengerOnMessageReceivedEnumerateNodes;
                     await _manager.Messenger.SendMessage(msg);
@@ -50,7 +50,7 @@ namespace FcuCore.Web.Controllers.Api
         public async Task ReadNodeVariables(ReadNodeVariablesRequest request)
         {
             for (byte x = 0; x < request.VariableCount; x++) {
-                var m = new MessageReadNodeVariable {
+                var m = new ReadNodeVariableMessage {
                     NodeNumber = request.NodeNumber,
                     VariableIndex = x
                 };
@@ -62,17 +62,17 @@ namespace FcuCore.Web.Controllers.Api
         {
             try {
                 switch (e.Message) {
-                    case MessageResponseToQueryNode msg:
-                        var m = new MessageRequestReadOfNodeParameterByIndex {
+                    case QueryNodesResponseMessage msg:
+                        var m = new ReadNodeParameterByIndexMessage {
                             ParameterIndex = 0,
                             NodeNumber = msg.NodeNumber
                         };
                         await _manager.Messenger.SendMessage(m);
                         break;
-                    case MessageNodeParameterResponse msg:
+                    case ReadNodeParameterByIndexResponseMessage msg:
                         if (msg.ParameterIndex == 0) {
                             for (byte x = 1; x < msg.ParameterValue; x++) {
-                                var m2 = new MessageRequestReadOfNodeParameterByIndex {
+                                var m2 = new ReadNodeParameterByIndexMessage {
                                     ParameterIndex = x,
                                     NodeNumber = msg.NodeNumber
                                 };

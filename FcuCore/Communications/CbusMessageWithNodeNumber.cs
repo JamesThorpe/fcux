@@ -2,9 +2,9 @@
 using FcuCore.Communications.Opcodes;
 
 namespace FcuCore.Communications {
-    public abstract class MessageNode : CbusMessage
+    public abstract class CbusMessageWithNodeNumber : CbusMessage
     {
-        protected MessageNode(CbusOpCodes opCode) : base(opCode) { }
+        protected CbusMessageWithNodeNumber(CbusOpCodes opCode) : base(opCode) { }
 
         public ushort NodeNumber {
             get => (ushort) ((Data[0] << 8) + Data[1]);

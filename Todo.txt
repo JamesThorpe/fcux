@@ -1,7 +1,4 @@
 Cbus dev guide:
 https://www.merg.org.uk/merg_wiki/lib/exe/fetch.php?media=cbus:developer_6b.pdf
 
-Read node parameters
-Read NVs from modules
-
 Write NVs to modules
