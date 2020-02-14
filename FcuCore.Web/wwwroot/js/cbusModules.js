@@ -10,16 +10,23 @@
             }
 
             let targetDefinition;
-            nv.definitions.forEach((d) => {
-                if (typeof (d.condition) === "function") {
-                    if (d.condition(node)) {
-                        targetDefinition = d.definition;
+            if (nv.definitions != undefined) {
+                nv.definitions.forEach((d) => {
+                    if (typeof (d.condition) === "function") {
+                        if (d.condition(node)) {
+                            targetDefinition = d.definition;
+                        }
                     }
-                }
-            });
+                });
+            }
             return targetDefinition;
         });
-        this.value = ko.observable(this.definition().default);
+        let defaultValue = 0;
+        if (this.definition() != undefined) {
+            defaultValue = this.definition().default;
+        }
+        this.value = ko.observable(defaultValue);
+
     }
 
     function node(config, type) {
@@ -55,6 +62,20 @@
 
         this.supportedNodeVariables = ko.computed(() => {
             return this.params()[6];
+        });
+
+        this.rawNodeVariables = ko.computed(() => {
+            const ret = [];
+            for (let x = 1; x < this.supportedNodeVariables(); x++) {
+                let nv = this.getNodeVariableByIndex(x);
+                if (nv === null) {
+                    nv = new nodeVariable(null, { index: x }, this);
+                    this.nodeVariables.push(nv);
+
+                }
+                ret.push(nv);
+            }
+            return ret;
         });
 
         this.nodeVariables = ko.observableArray();
@@ -125,15 +146,20 @@
     });
 
     cbus.comms.addHandler("PNN", (msg) => {
+        let md = null;
         for (let m in cbus.modules.definitions) {
-            const md = cbus.modules.definitions[m];
-            if (md.manufacturerId === msg.ManufacturerId && md.moduleId === msg.ModuleId) {
-                const n = new node(msg, md);
-                cbus.modules.list.remove(m => m.canId === n.canId);
-                cbus.modules.list.push(n);
+            let check = cbus.modules.definitions[m];
+            if (check.manufacturerId === msg.ManufacturerId && check.moduleId === msg.ModuleId) {
+                md = check;
                 break;
             }
         }
+        if (md == null) {
+            md = cbus.modules.definitions["UNKNOWN"];
+        }
+        const n = new node(msg, md);
+        cbus.modules.list.remove(m => m.canId === n.canId);
+        cbus.modules.list.push(n);
     });
 
     cbus.comms.addHandler(0x9B, (msg) => {

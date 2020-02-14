@@ -24,21 +24,45 @@
                         <span data-bind="text: nodeType.name"></span>
                     </div>
                 </div>
+                
+                <ul class="nav nav-tabs" role="tablist">
+                    <!-- ko foreach: nodeType.configGroups -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" data-bind="attr:{href:'#dialog-edit-nv-tab-'+name.replace(/[^a-z]/gi, '_')}, text: name, css: {'active': $index() === 0}"></a>
+                    </li>
+                    <!--/ko-->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#raw-nvs" data-bind="css: {'active': nodeType.configGroups.length === 0}">Raw NVs</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <!-- ko foreach: nodeType.configGroups -->
+                    <div class="tab-pane fade" data-bind="attr:{id:'dialog-edit-nv-tab-'+name.replace(/[^a-z]/gi, '_')}, css: {'show active': $index() === 0}">
+                        <div class="config-group">
+                            <!-- ko foreach: $parent.getValuesInGroup($data) -->
+                            <div>
+                                <span class="node-variable-index" data-bind="text: nv.index"></span>
+                                <!-- ko template: {name: 'nodevariable-tmpl-' + definition().type, data: $data} -->
+                                <!-- /ko -->
 
-                <!-- ko foreach: nodeType.configGroups -->
-                <div class="config-group">
-                    <h3 data-bind="text: name"></h3>
-                    <!-- ko foreach: $parent.getValuesInGroup($data) -->
-                    <div>
-                        <span class="node-variable-index" data-bind="text: nv.index"></span>
-                        <!-- ko template: {name: 'nodevariable-tmpl-' + definition().type, data: $data} -->
-                        <!-- /ko -->
-
+                            </div>
+                            <!-- /ko -->
+                        </div>
                     </div>
                     <!-- /ko -->
+                    <div class="tab-pane fade" id="raw-nvs" data-bind="css: {'show active': nodeType.configGroups.length === 0}">
+                        <div class="config-group">
+                            <!-- ko foreach: rawNodeVariables -->
+                            <div>
+                                <label>
+                                    <input type="number" data-bind="number: value" min="0" max="255">
+                                    <span data-bind="text: 'NV ' + index"></span>
+                                </label>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
                 </div>
-                <!-- /ko -->
-
 
             </div>
             <div class="modal-footer">
