@@ -1,4 +1,6 @@
-﻿cbus.modules.definitions["CANACE8C"] = {
+﻿/*
+cbus.modules.definitions["CANACE8C"] = {
+ 
     manufacturerId: 165,
     moduleId: 5,
     name: "CANACE8C",
@@ -67,3 +69,4 @@
         }
     ]
 };
+*/

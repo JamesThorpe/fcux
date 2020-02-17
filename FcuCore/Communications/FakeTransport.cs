@@ -23,6 +23,15 @@ namespace FcuCore.Communications {
                         BytesReceived?.Invoke(this,
                             new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB040NB60101A5050F;")));
                         break;
+                    case CbusOpCodes.RQNPN:
+                        var m = cmsg as ReadNodeParameterByIndexMessage;
+                        await Task.Delay(200);
+                        BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(new ReadNodeParameterByIndexResponseMessage {
+                            NodeNumber = m.NodeNumber,
+                            ParameterIndex = 6,
+                            ParameterValue = 10
+                        }.TransportString)));
+                        break;
                 }
             });
         }

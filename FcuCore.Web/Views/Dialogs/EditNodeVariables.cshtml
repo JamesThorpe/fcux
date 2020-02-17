@@ -52,7 +52,7 @@
                     <!-- /ko -->
                     <div class="tab-pane fade" id="raw-nvs" data-bind="css: {'show active': nodeType.configGroups.length === 0}">
                         <div class="config-group">
-                            <!-- ko foreach: rawNodeVariables -->
+                            <!-- ko foreach: nodeVariables -->
                             <div>
                                 <label>
                                     <input type="number" data-bind="number: value" min="0" max="255">

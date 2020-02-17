@@ -1,5 +1,6 @@
 ﻿(function (cbus, ko, $) {
 
+    /*
     function nodeVariable(group, nv, node) {
         this.group = group;
         this.index = nv.index;
@@ -26,8 +27,8 @@
             defaultValue = this.definition().default;
         }
         this.value = ko.observable(defaultValue);
-
     }
+    */
 
     function node(config, type) {
         this.nodeType = type;
@@ -61,31 +62,40 @@
         });
 
         this.supportedNodeVariables = ko.computed(() => {
-            return this.params()[6];
-        });
-
-        this.rawNodeVariables = ko.computed(() => {
-            const ret = [];
-            for (let x = 1; x < this.supportedNodeVariables(); x++) {
-                let nv = this.getNodeVariableByIndex(x);
-                if (nv === null) {
-                    nv = new nodeVariable(null, { index: x }, this);
-                    this.nodeVariables.push(nv);
-
-                }
-                ret.push(nv);
+            if (this.params()[6] !== undefined) {
+                return this.params()[6];
             }
-            return ret;
+            return -1;
         });
 
+
+        this.nodeVariables = ko.observableArray([]);
+        this.params.subscribe(() => {
+            if (this.supportedNodeVariables() !== -1) {
+                if (this.nodeVariables().length < this.supportedNodeVariables()) {
+                    for (let x = 1; x <= this.supportedNodeVariables(); x++) {
+                        if (!this.nodeVariables().find((nv) => nv.index === x)) {
+                            this.nodeVariables.push({
+                                index: x,
+                                value: ko.observable(0)
+                            });
+                        }
+                    }
+                }
+            }
+        });
+
+        /*
         this.nodeVariables = ko.observableArray();
         type.configGroups.forEach(cg => {
             cg.nodeVariables.forEach(nv => {
                 this.nodeVariables.push(new nodeVariable(cg, nv, this));
             });
         });
+        */
     }
 
+    /*
     node.prototype.getValuesInGroup = function (group) {
         return this.nodeVariables().filter((nv) => nv.group === group);
     };
@@ -97,28 +107,32 @@
         }
         return null;
     };
+    */
 
-    node.prototype.editNodeVariables = function() {
-        cbus.modules.currentNode(this);
-        $("#dialog-edit-node-variables").modal("show");
+    node.prototype.editNodeVariables = function () {
+        if (this.supportedNodeVariables() !== -1) {
+            cbus.modules.currentNode(this);
+            $("#dialog-edit-node-variables").modal("show");
+        } else {
+            console.warn('Unknown node variables count - unable to display NV editor');
+        }
     };
     node.prototype.closeEditNodeVariables = function() {
         $("#dialog-edit-node-variables").modal("hide");
         cbus.modules.currentNode(null);
     };
     node.prototype.readNodeVariables = function() {
-        cbus.api.sendApiRequest("Manager",
-            "ReadNodeVariables",
-            {
-                NodeNumber: this.nodeNumber,
-                VariableCount: this.supportedNodeVariables()
-            });
+        cbus.api.sendApiRequest("Manager", "ReadNodeVariables", {
+            NodeNumber: this.nodeNumber,
+            VariableCount: this.supportedNodeVariables()
+        });
     };
+    /*
     node.prototype.getNodeVariableByIndex = function (i) {
         const nv = this.nodeVariables().find((n) => n.index === i);
         return nv ? nv : null;
     };
-
+    */
 
     cbus.modules = {
         definitions: {},
