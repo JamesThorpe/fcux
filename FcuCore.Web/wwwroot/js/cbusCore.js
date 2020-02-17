@@ -45,11 +45,13 @@
             cbus.api.readApi("Manager", "ConfigureComms").done((d) => {
                 cbus.comms.transport(d.transport);
                 cbus.comms.serialPort(d.serialPort);
+                cbus.comms.availableSerialPorts(d.availableSerialPorts);
                 $("#dialog-configure-comms").modal("show");
             });
         },
         transport: ko.observable('Serial'),
         serialPort: ko.observable(''),
+        availableSerialPorts: ko.observableArray([]),
         closeConfigure: () => {
             $("#dialog-configure-comms").modal("hide");
         },

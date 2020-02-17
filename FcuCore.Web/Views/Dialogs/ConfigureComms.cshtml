@@ -10,7 +10,7 @@
                     <label for="dialog-configure-comms-radio-serial" class="form-check-label">Serial Port</label>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" data-bind="value: comms.serialPort, enable: comms.transport() === 'Serial'" />
+                    <select class="form-control" data-bind="options: comms.availableSerialPorts, value: comms.serialPort, enable: comms.transport() === 'Serial'"></select>
                 </div>
                 <hr />
                 <div class="form-check">

@@ -15,5 +15,8 @@ namespace FcuCore {
         public TransportProviders Transport { get; set; } = TransportProviders.Serial;
 
         public string SerialPort { get; set; } = "COM5";
+
+        public IEnumerable<string> AvailableSerialPorts => System.IO.Ports.SerialPort.GetPortNames();
+        
     }
 }
