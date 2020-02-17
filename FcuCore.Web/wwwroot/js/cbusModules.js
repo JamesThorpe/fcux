@@ -184,8 +184,9 @@
 
     cbus.comms.addHandler(0x97,
         (msg) => {
-            var n = cbus.modules.getByNodeNumber(msg.NodeNumber);
-            var nv = n.getNodeVariableByIndex(msg.VariableIndex);
+            const n = cbus.modules.getByNodeNumber(msg.NodeNumber);
+            
+            const nv = n.nodeVariables().find(x => x.index === msg.VariableIndex);
             if (nv != null) {
                 nv.value(msg.VariableValue);
             }
