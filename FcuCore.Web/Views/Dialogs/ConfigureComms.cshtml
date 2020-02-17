@@ -8,14 +8,15 @@
                 <div class="form-check">
                     <input type="radio" class="form-check-input" name="comms-transport" value="Serial" data-bind="checked: comms.transport" id="dialog-configure-comms-radio-serial" />
                     <label for="dialog-configure-comms-radio-serial" class="form-check-label">Serial Port</label>
-                    
                 </div>
                 <div class="form-group">
                     <input class="form-control" data-bind="value: comms.serialPort, enable: comms.transport() === 'Serial'" />
                 </div>
                 <hr />
-                
-                <label><input type="radio" name="comms-transport" value="Test" data-bind="checked: comms.transport"/> Test</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="comms-transport" value="Test" data-bind="checked: comms.transport" id="dialog-configure-comms-radio-test" />
+                    <label for="dialog-configure-comms-radio-test" class="form-check-label">Test</label>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bind="click: comms.closeConfigure">Close</button>
