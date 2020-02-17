@@ -1,35 +1,5 @@
 ﻿(function (cbus, ko, $) {
 
-    /*
-    function nodeVariable(group, nv, node) {
-        this.group = group;
-        this.index = nv.index;
-        this.nv = nv;
-        this.definition = ko.computed(() => {
-            if (nv.definition) {
-                return nv.definition;
-            }
-
-            let targetDefinition;
-            if (nv.definitions != undefined) {
-                nv.definitions.forEach((d) => {
-                    if (typeof (d.condition) === "function") {
-                        if (d.condition(node)) {
-                            targetDefinition = d.definition;
-                        }
-                    }
-                });
-            }
-            return targetDefinition;
-        });
-        let defaultValue = 0;
-        if (this.definition() != undefined) {
-            defaultValue = this.definition().default;
-        }
-        this.value = ko.observable(defaultValue);
-    }
-    */
-
     function node(config, type) {
         this.nodeType = type;
         this.nodeNumber = config.NodeNumber;
@@ -85,29 +55,7 @@
             }
         });
 
-        /*
-        this.nodeVariables = ko.observableArray();
-        type.configGroups.forEach(cg => {
-            cg.nodeVariables.forEach(nv => {
-                this.nodeVariables.push(new nodeVariable(cg, nv, this));
-            });
-        });
-        */
     }
-
-    /*
-    node.prototype.getValuesInGroup = function (group) {
-        return this.nodeVariables().filter((nv) => nv.group === group);
-    };
-
-    node.prototype.getNodeVariableValue = function (index) {
-        const nv = this.nodeVariables().find((nv) => nv.nv.index === index);
-        if (nv != null) {
-            return nv.value();
-        }
-        return null;
-    };
-    */
 
     node.prototype.editNodeVariables = function () {
         if (this.supportedNodeVariables() !== -1) {
@@ -127,12 +75,6 @@
             VariableCount: this.supportedNodeVariables()
         });
     };
-    /*
-    node.prototype.getNodeVariableByIndex = function (i) {
-        const nv = this.nodeVariables().find((n) => n.index === i);
-        return nv ? nv : null;
-    };
-    */
 
     cbus.modules = {
         definitions: {},
