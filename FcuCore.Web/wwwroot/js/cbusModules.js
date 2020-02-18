@@ -55,6 +55,8 @@
             }
         });
 
+        this._rawNVs = {};
+
     }
 
     node.prototype.editNodeVariables = function () {
@@ -75,12 +77,20 @@
             VariableCount: this.supportedNodeVariables()
         });
     };
-    node.prototype.getNodeVariable = function(nvIndex) {
-        const nv = this.nodeVariables().find((n) => n.index === nvIndex);
+    node.prototype.getNodeVariable = function (nvIndex) {
+        const nv = this.getNV(nvIndex);
         if (nv != null) {
             return nv.value();
         }
         return -1;
+    };
+
+    node.prototype.getNV = function(nvIndex) {
+        if (this._rawNVs[nvIndex]) {
+            return this._rawNVs[nvIndex];
+        }
+        this._rawNVs[nvIndex] = this.nodeVariables().find((n) => n.index === nvIndex);
+        return this._rawNVs[nvIndex];
     };
 
     cbus.modules = {

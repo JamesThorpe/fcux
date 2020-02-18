@@ -128,12 +128,15 @@ div.config-subgroup {
     border-radius: 5px;
     padding: 10px;
     margin: 10px 10px 10px 0px;
+    min-width: 200px;
 }
 div.config-subgroup h6 {
     background-color: #fff;
     margin-top: -20px;
     padding: 0px 10px;
     font-size: 13px;
+    display: inline-block;
+    position: absolute;
 }
 
 div.config-group input:invalid {

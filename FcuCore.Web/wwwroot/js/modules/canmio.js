@@ -25,7 +25,7 @@
 
 function generateIO(index, baseNv) {
     return {
-        name: "I/O " + index,
+        group: "I/O " + index,
             items: [
                 {
                     name: "Type",
@@ -276,7 +276,33 @@ cbus.modules.definitions["CANMIO"] = {
                     nv: 4
                 }
             ]
-        },
+        }, {
+            name: "IO 1-8",
+            items: [
+                generateIO(1, 16),
+                generateIO(2, 23),
+                generateIO(3, 30),
+                generateIO(4, 37),
+                generateIO(5, 44),
+                generateIO(6, 51),
+                generateIO(7, 58),
+                generateIO(8, 65)
+            ]
+        }, {
+            name: "IO 9-16",
+            items: [
+                generateIO(9, 72),
+                generateIO(10, 79),
+                generateIO(11, 86),
+                generateIO(12, 93),
+                generateIO(13, 100),
+                generateIO(14, 107),
+                generateIO(15, 114),
+                generateIO(16, 121)
+            ]
+        }
+
+        /*,
         generateIO(1, 16),
         generateIO(2, 23),
         generateIO(3, 30),
@@ -292,6 +318,6 @@ cbus.modules.definitions["CANMIO"] = {
         generateIO(13, 100),
         generateIO(14, 107),
         generateIO(15, 114),
-        generateIO(16, 121)
+        generateIO(16, 121)*/
     ]
 };
