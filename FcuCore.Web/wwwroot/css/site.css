@@ -130,6 +130,11 @@ div.config-subgroup {
     margin: 10px 10px 10px 0px;
     min-width: 200px;
 }
+div.config-subgroup div.config-subgroup {
+    border: none;
+    padding: 0px;
+    margin: 25px 0px 20px 0px;
+}
 div.config-subgroup h6 {
     background-color: #fff;
     margin-top: -20px;

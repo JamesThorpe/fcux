@@ -96,11 +96,12 @@
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-numeric">
-    <div class="form-group">
-        <label>
-            <span data-bind="text: definition.name"></span>
-            <input class="form-control" type="number" data-bind="number: value" min="0" max="255">
-        </label>
+    <div class="form-inline">
+        <div class="form-group">
+            <label class="mr-1" data-bind="text: definition.name, attr: {for: $root.modules.getId($data)}"></label>
+            <input class="form-control form-control-sm" type="number" data-bind="number: value, attr: {id: $root.modules.getId($data)}" min="0" max="255">
+            
+        </div>
     </div>
 </script>
 
@@ -117,18 +118,16 @@
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-select">
-    <label>
-        <span data-bind="text: definition.name"></span>
-        <select class="form-control" data-bind="value: value, options: definition.selectValues, optionsText: 'name', optionsValue: 'value'"></select>
-    </label>
+    <div class="form-inline">
+        <label class="mr-1" data-bind="text: definition.name, attr: {for: $root.modules.getId($data)}"></label>
+        <select class="form-control form-control-sm" data-bind="value: value, options: definition.selectValues, optionsText: 'name', optionsValue: 'value', attr: {id: $root.modules.getId($data)}"></select>
+    </div>
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-flag">
     <div class="form-check">
-        <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" data-bind="bitmask: value, bit: definition.flagValue">
-            <span data-bind="text: definition.name"></span>
-        </label>
+        <input type="checkbox" class="form-check-input" data-bind="bitmask: value, bit: definition.flagValue, attr: {id: $root.modules.getId($data)}">
+        <label class="form-check-label" data-bind="attr: {for: $root.modules.getId($data)}, text: definition.name"></label>
     </div>
 </script>
 

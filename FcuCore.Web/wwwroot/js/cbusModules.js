@@ -93,6 +93,8 @@
         return this._rawNVs[nvIndex];
     };
 
+    var id = 0;
+
     cbus.modules = {
         definitions: {},
         list: ko.observableArray(),
@@ -104,6 +106,12 @@
                 return f[0];
             }
             return null;
+        },
+        getId: (d) => {
+            if (d.__id == undefined) {
+                d.__id = ++id;
+            }
+            return "module-nv-" + d.__id;
         }
     };
 
