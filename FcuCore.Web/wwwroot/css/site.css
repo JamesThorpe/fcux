@@ -99,7 +99,18 @@ div.node-header div.node-info span:first-child {
     font-weight: bold;
 }
 
-div.config-group {
+div#dialog-edit-node-variables div.modal-body {
+    padding: 10px 0px;
+}
+
+div#dialog-edit-node-variables div.modal-body ul.nav-tabs {
+    padding-left: 10px;
+}
+
+div#dialog-edit-node-variables div.modal-body div.tab-content {
+    padding: 0px 20px;
+}
+div .config-group {
     margin-top: 10px;
     font-size: 13px;
     display: flex;
@@ -116,13 +127,11 @@ div.config-subgroup {
     border: 1px solid #dee2e6;
     border-radius: 5px;
     padding: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    margin: 10px 10px 10px 0px;
 }
 div.config-subgroup h6 {
     background-color: #fff;
     margin-top: -20px;
-    position: absolute;
     padding: 0px 10px;
     font-size: 13px;
 }

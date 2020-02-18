@@ -75,6 +75,13 @@
             VariableCount: this.supportedNodeVariables()
         });
     };
+    node.prototype.getNodeVariable = function(nvIndex) {
+        const nv = this.nodeVariables().find((n) => n.index === nvIndex);
+        if (nv != null) {
+            return nv.value();
+        }
+        return -1;
+    };
 
     cbus.modules = {
         definitions: {},

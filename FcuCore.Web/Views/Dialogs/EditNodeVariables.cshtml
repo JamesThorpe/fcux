@@ -1,11 +1,9 @@
 ﻿<div class="modal" tabindex="-1" role="dialog" id="dialog-edit-node-variables" data-backdrop="static">
     <!-- ko with: modules.currentNode -->
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Node Variables</h5>
-            </div>
-            <div class="modal-body">
                 <div class="node-header">
                     <div class="node-info">
                         <span>Node Number</span>
@@ -24,7 +22,9 @@
                         <span data-bind="text: nodeType.name"></span>
                     </div>
                 </div>
-                
+            </div>
+            <div class="modal-body">
+               
                 <ul class="nav nav-tabs" role="tablist">
                     <!-- ko foreach: nodeType.configTabs -->
                     <li class="nav-item">
@@ -40,16 +40,19 @@
                     <div class="tab-pane fade" data-bind="attr:{id:'dialog-edit-nv-tab-'+name.replace(/[^a-z]/gi, '_')}, css: {'show active': $index() === 0}">
                         <div class="config-group">
                             <!-- ko foreach: items -->
+                            <!-- ko if: (typeof visible === "function" && visible($parents[1])) || typeof visible !== "function" -->
                                 <!-- ko if: $data.group -->
-                                <div class="config-subgroup">
-                                    <h6 data-bind="text: group"></h6>
-                                    <!-- ko foreach: items -->
-                                    <div>
-                                        <!-- ko template: {name: 'nodevariable-tmpl-' + type, data: {definition: $data, value: $parents[2].nodeVariables().find((i) => i.index === nv).value}} -->
-                                        <!-- /ko -->
-                                    </div>
+                            <div class="config-subgroup">
+                                <h6 data-bind="text: group"></h6>
+                                <!-- ko foreach: items -->
+                                <!-- ko if: (typeof visible === "function" && visible($parents[2])) || typeof visible !== "function" -->
+                                <div>
+                                    <!-- ko template: {name: 'nodevariable-tmpl-' + type, data: {definition: $data, value: $parents[2].nodeVariables().find((i) => i.index === nv).value}} -->
                                     <!-- /ko -->
                                 </div>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                            </div>
                                 <!-- /ko -->
                                 <!-- ko if: $data.name -->
                                     <div class="config-item">
@@ -57,6 +60,7 @@
                                         <!-- /ko -->
                                     </div>
                                 <!-- /ko -->
+                            <!-- /ko -->
                             <!-- /ko -->
                         </div>
                     </div>
@@ -108,8 +112,10 @@
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-select">
-    <select data-bind="value: value, options: definition().selectValues, optionsText: 'name', optionsValue: 'value'"></select>
-    <span data-bind="text: definition.name"></span>
+    <label>
+        <span data-bind="text: definition.name"></span>
+        <select class="form-control" data-bind="value: value, options: definition.selectValues, optionsText: 'name', optionsValue: 'value'"></select>
+    </label>
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-flag">
@@ -122,8 +128,10 @@
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-flags">
-    <!-- ko foreach: definition.flagValues -->
-    <label><input type="checkbox" data-bind="bitmask: $parent.value, bit: value"><span data-bind="text: name"></span></label>
-    <!-- /ko -->
     <span data-bind="text: definition.name"></span>
+    <!-- ko foreach: definition.flagValues -->
+    <div>
+    <label><input type="checkbox" data-bind="bitmask: $parent.value, bit: value"><span data-bind="text: name"></span></label>
+    </div>
+    <!-- /ko -->
 </script>
