@@ -73,7 +73,7 @@
 <script type="text/html" id="nodevariable-tmpl-item">
     <!-- ko if: (typeof data.visible === "function" && data.visible(node)) || typeof data.visible !== "function" -->
     <!-- ko if: data.group -->
-    <div class="config-subgroup">
+    <div class="config-subgroup config-entry">
     <h6 data-bind="text: data.group"></h6>
     
         <!-- ko foreach: data.items -->
@@ -86,7 +86,7 @@
     </div>
     <!-- /ko -->
     <!-- ko if: data.name -->
-    <div class="config-item">
+    <div class="config-item config-entry">
         
         <!-- ko template: {name: 'nodevariable-tmpl-' + data.type, data: {definition: data, value: node.getNV(data.nv).value}} -->
         <!-- /ko -->
@@ -96,13 +96,13 @@
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-numeric">
-    <div class="form-inline">
-        <div class="form-group">
-            <label class="mr-1" data-bind="text: definition.name, attr: {for: $root.modules.getId($data)}"></label>
+    <div class="row">
+        <label class="col-6 col-form-label-sm" data-bind="text: definition.name, attr: {for: $root.modules.getId($data)}"></label>
+        <div class="col-6">
             <input class="form-control form-control-sm" type="number" data-bind="number: value, attr: {id: $root.modules.getId($data)}" min="0" max="255">
-            
         </div>
     </div>
+
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-bitfield">
@@ -118,9 +118,11 @@
 </script>
 
 <script type="text/html" id="nodevariable-tmpl-select">
-    <div class="form-inline">
-        <label class="mr-1" data-bind="text: definition.name, attr: {for: $root.modules.getId($data)}"></label>
+    <div class="row">
+    <label class="col-sm-6 col-form-label-sm" data-bind="text: definition.name, attr: {for: $root.modules.getId($data)}"></label>
+    <div class="col-sm-6">
         <select class="form-control form-control-sm" data-bind="value: value, options: definition.selectValues, optionsText: 'name', optionsValue: 'value', attr: {id: $root.modules.getId($data)}"></select>
+    </div>
     </div>
 </script>
 

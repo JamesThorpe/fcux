@@ -120,6 +120,9 @@ div .config-group {
 div.config-group h3 {
     font-size: 13px;
 }
+div.config-group label {
+    margin-bottom: 0px;
+}
 div.config-item {
     width: 100%;
 }
@@ -133,8 +136,15 @@ div.config-subgroup {
 div.config-subgroup div.config-subgroup {
     border: none;
     padding: 0px;
-    margin: 25px 0px 20px 0px;
+    margin:25px 0px 0px 0px;
 }
+
+div.config-group > div.config-subgroup > div.config-entry:not(:last-child) {
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0px;
+    padding-bottom: 8px;
+}
+
 div.config-subgroup h6 {
     background-color: #fff;
     margin-top: -20px;

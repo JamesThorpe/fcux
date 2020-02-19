@@ -252,7 +252,7 @@ function generateIO(index, baseNv) {
 
 cbus.modules.definitions["CANMIO"] = {
     manufacturerId: 165,
-    moduleId: 9, //TODO: find out what this is
+    moduleId: 32,
     name: "CANMIO",
     configTabs: [
         {

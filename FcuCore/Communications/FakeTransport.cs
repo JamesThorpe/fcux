@@ -13,22 +13,17 @@ namespace FcuCore.Communications {
                 var cmsg = CbusMessage.FromTransportString(msg);
                 switch (cmsg.OpCode) {
                     case CbusOpCodes.QNN:
-                        await Task.Delay(500);
                         BytesReceived?.Invoke(this,
                             new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB060NB60102A5080D;")));
-                        await Task.Delay(100);
                         BytesReceived?.Invoke(this,
                             new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB020NB60100A5050F;")));
-                        await Task.Delay(100);
                         BytesReceived?.Invoke(this,
                             new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB040NB60101A5050F;")));
-                        await Task.Delay(100);
                         BytesReceived?.Invoke(this,
-                            new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB080NB60103A5090F;")));
+                            new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(":SB080NB60103A5200F;")));
                         break;
                     case CbusOpCodes.RQNPN:
                         var m = cmsg as ReadNodeParameterByIndexMessage;
-                        await Task.Delay(200);
                         BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(new ReadNodeParameterByIndexResponseMessage {
                             NodeNumber = m.NodeNumber,
                             ParameterIndex = 6,
