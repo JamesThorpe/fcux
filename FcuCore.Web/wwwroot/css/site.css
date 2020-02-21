@@ -211,7 +211,7 @@ span.node-variable-index {
     width:180px;
     box-shadow: 2px 2px 3px 0px #000;
     cursor: pointer;
-  
+    margin: 0px 3px 3px 0px;
 }
 
 .event div:first-child, .node div:first-child {
@@ -239,11 +239,6 @@ span.node-variable-index {
     border-color: #7aa395;
 }
 
-.node:hover div:first-child {
-    background-color: #2d9aa5;
-    color: black;
-}
-
 .node:active  {
     box-shadow: none;
     margin: 3px 0px 0px 3px;
@@ -252,6 +247,16 @@ span.node-variable-index {
 .node, .node div:first-child {
     border-color: #2d9aa5;
 }
+
+.node:hover div:first-child {
+    background-color: #faffab;
+    color: black;
+}
+
+    .node:hover:not(.empty-node), .node:hover div:first-child {
+        border-color: #faffab;
+    }
+
 .node.empty-node {
     height: 35px;
     border-style: dotted;
@@ -286,4 +291,5 @@ span.node-variable-index {
     border-bottom: 10px solid transparent; 
     border-right:10px solid #a1a4a7;
     margin-left: -10px;
+    position: absolute;
 }

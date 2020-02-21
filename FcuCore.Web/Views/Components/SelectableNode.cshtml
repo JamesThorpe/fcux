@@ -12,12 +12,12 @@
         Select Node
     </div>
     <!-- /ko -->
-
+    
     <div class="node-selector">
         <div class="left-arrow"></div>
-        <input class="form-control form-control-sm" placeholder="filter" />
-        <!-- ko foreach: $root.modules.list -->
-        <div class="node" data-bind="click: function(n,e) { $parentContext.$rawData(this); $(e.target).closest('.node-selector').hide(); }">
+        <input class="form-control form-control-sm" placeholder="filter" data-bind="textInput: $root.modules.nodeSelectorFilter" />
+        <!-- ko foreach: $root.modules.nodeSelectorList -->
+        <div class="node" data-bind="click: function(n,e) { $parentContext.$rawData(this); $(e.target).closest('.node-selector').hide(); cbus.modules.nodeSelectorFilter(''); }">
             <div>
                 <span data-bind="text: nodeNumber"></span> / <span data-bind="text: nodeType.name"></span>
             </div>
@@ -26,7 +26,3 @@
         <!-- /ko -->
     </div>
 </div>
-
-<!--
-<button data-bind="click: function() { $rawData(null) }">test</button>
--->
