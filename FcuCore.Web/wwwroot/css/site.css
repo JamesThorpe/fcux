@@ -135,16 +135,13 @@ div.node-header div.node-info span:first-child {
 }
 
 div#dialog-edit-node-variables div.modal-body {
-    padding: 10px 0px;
+    padding: 0px;
 }
 
 div#dialog-edit-node-variables div.modal-body ul.nav-tabs {
     padding-left: 10px;
 }
 
-div#dialog-edit-node-variables div.modal-body div.tab-content {
-    padding: 0px 20px;
-}
 div .config-group {
     margin-top: 10px;
     font-size: 13px;
@@ -212,6 +209,7 @@ span.node-variable-index {
     box-shadow: 2px 2px 3px 0px #000;
     cursor: pointer;
     margin: 0px 3px 3px 0px;
+    line-height: 35px;
 }
 
 .event div:first-child, .node div:first-child {
@@ -265,16 +263,16 @@ span.node-variable-index {
     text-align: center;
     font-size: 13px;
     color: #000;
-    line-height: 35px;
 }
 
 .selectable-node {
     position: relative;
+    display: inline-block;
 }
 
 .node-selector {
     position: absolute;
-    width: 185px;
+    width: 205px;
     z-index: 100;
     background-color: #a1a4a7;
     border: 2px solid #a1a4a7;
@@ -282,6 +280,7 @@ span.node-variable-index {
     top: 0px;
     left: 180px;
     display: none;
+    box-shadow: 3px 3px 2px 0px #000;
 }
 
 .node-selector div.left-arrow {
@@ -292,4 +291,9 @@ span.node-variable-index {
     border-right:10px solid #a1a4a7;
     margin-left: -10px;
     position: absolute;
+}
+
+.node-selector .node-selector-list {
+    max-height: 90px;
+    overflow-y: scroll;
 }

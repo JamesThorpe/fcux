@@ -110,7 +110,8 @@
         shortEvents: ko.observableArray([]),
         currentNode: ko.observable(null),
         selectedNode: ko.observable(null),
-        selectedNode2: ko.observable(null),
+        eventsNode: ko.observable(null),
+        assignedEventsNode: ko.observable(null),
         getByNodeNumber: (n) => {
             var f = cbus.modules.list().filter(m => m.nodeNumber === n);
             if (f.length) {
