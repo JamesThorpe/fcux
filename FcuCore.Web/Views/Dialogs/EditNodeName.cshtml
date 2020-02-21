@@ -1,0 +1,38 @@
+﻿<div class="modal" tabindex="-1" role="dialog" id="dialog-edit-node-name" data-backdrop="static">
+    <!-- ko with: modules.currentNode -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Node Name</h5>
+                <div class="node-header">
+                    <div class="node-info">
+                        <span>Node Number</span>
+                        <span data-bind="text: nodeNumber"></span>
+                    </div>
+                    <div class="node-info">
+                        <span>CAN ID</span>
+                        <span data-bind="text: canId"></span>
+                    </div>
+                    <div class="node-info">
+                        <span>Version</span>
+                        <span data-bind="text: version"></span>
+                    </div>
+                    <div class="node-info">
+                        <span>Type</span>
+                        <span data-bind="text: nodeType.name"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="dialog-edit-node-name-input">Name</label>
+                    <input type="text" class="form-control" data-bind="value: name" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>

@@ -1,23 +1,23 @@
 ﻿
 
 <h5>Node List</h5>
-
-
 <table class="node-table">
     <thead>
     <tr>
+        <th class="info-cell">Name</th>
         <th class="info-cell">Node Number</th>
         <th class="info-cell">CAN ID</th>
         <th class="info-cell">Version</th>
         <th class="info-cell">Type</th>
         <th colspan="2">
-            <label>Filter: <input data-bind="textInput: modules.listFilter" /></label>
+            <label>Filter: <input data-bind="textInput: modules.listFilter"/></label>
         </th>
     </tr>
     </thead>
     <tbody>
         <!-- ko foreach: modules.filteredList -->
-        <tr>
+        <tr data-bind="click: $parent.modules.selectNode, css: {selected: $parent.modules.selectedNode() === $data}">
+            <td class="info-cell"><span data-bind="text: name, title: name"></span> <i class="fa fa-pencil" data-bind="click: editName"></i></td>
             <td class="info-cell" data-bind="text: nodeNumber"></td>
             <td class="info-cell" data-bind="text: canId"></td>
             <td class="info-cell" data-bind="text: version"></td>
@@ -37,7 +37,7 @@
         <!-- /ko -->
         <!-- ko if: modules.filteredList().length < modules.list().length -->
         <tr>
-            <td colspan="6">Filtered to <span data-bind="text:modules.filteredList().length"></span> of <span data-bind="text:modules.list().length"></span> nodes</td>
+            <td colspan="7">Filtered to <span data-bind="text:modules.filteredList().length"></span> of <span data-bind="text:modules.list().length"></span> nodes</td>
         </tr>
         <!-- /ko -->
     </tbody>

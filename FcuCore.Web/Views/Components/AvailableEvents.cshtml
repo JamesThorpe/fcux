@@ -1,0 +1,33 @@
+﻿
+<h5>Available Events</h5>
+<button class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i> Add Short Event</button>
+<div class="events">
+
+    <!-- ko using: modules.selectedNode -->
+    <partial name="/Views/Components/SelectableNode.cshtml" />
+    <!-- /ko -->
+    <!-- ko using: modules.selectedNode2 -->
+    <partial name="/Views/Components/SelectableNode.cshtml" />
+    <!-- /ko -->
+    <!-- ko foreach: modules.shortEvents -->
+    <div class="event short-event">
+        <div>DN: <span data-bind="text: dn"></span></div>
+        <div data-bind="text: name, attr: {title: name}"></div>
+    </div>
+    <!-- /ko -->
+
+</div>
+
+<div class="event long-event">
+    <div>Node: 123, Event: 1</div>
+    <div>
+        Custom name
+    </div>
+</div>
+
+<div class="event short-event">
+    <div>DN: 259</div>
+    <div title="Another event with a really long name">
+        Another event with a really long name
+    </div>
+</div>

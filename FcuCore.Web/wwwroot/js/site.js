@@ -9,3 +9,6 @@ ko.applyBindings(window.cbus);
 window.cbus.oncbusmessage = (msg) => {
     console.log(msg.DisplayString, msg);
 };
+
+
+$(".event").draggable();

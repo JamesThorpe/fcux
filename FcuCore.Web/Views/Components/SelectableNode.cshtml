@@ -1,0 +1,32 @@
+﻿<div class="selectable-node">
+    <!-- ko if: $data -->
+    <div class="node" data-bind="click: $root.modules.nodeSelector">
+        <div>
+            <span data-bind="text: nodeNumber"></span> / <span data-bind="text: nodeType.name"></span>
+        </div>
+        <div data-bind="text: name, attr: {title: name}"></div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: $data == null -->
+    <div class="node empty-node" data-bind="click: $root.modules.nodeSelector">
+        Select Node
+    </div>
+    <!-- /ko -->
+
+    <div class="node-selector">
+        <div class="left-arrow"></div>
+        <input class="form-control form-control-sm" placeholder="filter" />
+        <!-- ko foreach: $root.modules.list -->
+        <div class="node" data-bind="click: function(n,e) { $parentContext.$rawData(this); $(e.target).closest('.node-selector').hide(); }">
+            <div>
+                <span data-bind="text: nodeNumber"></span> / <span data-bind="text: nodeType.name"></span>
+            </div>
+            <div data-bind="text: name, attr: {title: name}"></div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<!--
+<button data-bind="click: function() { $rawData(null) }">test</button>
+-->

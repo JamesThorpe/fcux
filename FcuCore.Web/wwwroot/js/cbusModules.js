@@ -3,6 +3,7 @@
     function node(config, type) {
         this.nodeType = type;
         this.nodeNumber = config.NodeNumber;
+        this.name = ko.observable('Unnamed Node');
         this.canId = config.CanId;
         this.isConsumerNode = config.IsConsumerNode;
         this.isProducerNode = config.IsProducerNode;
@@ -57,8 +58,13 @@
 
         this._rawNVs = {};
 
+        this.producedEvents = ko.observableArray([]);
     }
 
+    node.prototype.editName = function() {
+        cbus.modules.currentNode(this);
+        $("#dialog-edit-node-name").modal("show");
+    };
     node.prototype.editNodeVariables = function () {
         if (this.supportedNodeVariables() !== -1) {
             cbus.modules.currentNode(this);
@@ -99,7 +105,10 @@
         definitions: {},
         list: ko.observableArray(),
         listFilter: ko.observable(''),
+        shortEvents: ko.observableArray([]),
         currentNode: ko.observable(null),
+        selectedNode: ko.observable(null),
+        selectedNode2: ko.observable(null),
         getByNodeNumber: (n) => {
             var f = cbus.modules.list().filter(m => m.nodeNumber === n);
             if (f.length) {
@@ -112,6 +121,9 @@
                 d.__id = ++id;
             }
             return "module-nv-" + d.__id;
+        },
+        selectNode: (n) => {
+            cbus.modules.selectedNode(n);
         }
     };
 
@@ -120,10 +132,29 @@
             return cbus.modules.list();
 
         return cbus.modules.list().filter((m) => {
-            return m.nodeNumber.toString().indexOf(cbus.modules.listFilter()) > -1 ||
-                m.nodeType.name.toUpperCase().indexOf(cbus.modules.listFilter().toUpperCase()) > -1;
-            
+            const filter = cbus.modules.listFilter().toUpperCase();
+            return m.nodeNumber.toString().indexOf(filter) > -1 ||
+                m.nodeType.name.toUpperCase().indexOf(filter) > -1 ||
+                m.name().toUpperCase().indexOf(filter) > -1;
+
+
         });
+    });
+
+    cbus.modules.nodeSelector = (a, b, c, d) => {
+
+        const node = $(b.target).closest(".node");
+        
+        const selector = $(node).nextAll(".node-selector");
+        selector.show();
+        selector.click(function(e) {
+            e.stopPropagation();
+        });
+
+        b.stopPropagation();
+    };
+    $(document).click(function() {
+        $(".node-selector").hide();
     });
 
     cbus.comms.addHandler("PNN", (msg) => {
