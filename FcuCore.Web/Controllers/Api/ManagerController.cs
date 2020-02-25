@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
@@ -9,6 +10,7 @@ using FcuCore.Communications.Opcodes;
 using FcuCore.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace FcuCore.Web.Controllers.Api
 {
@@ -17,10 +19,12 @@ namespace FcuCore.Web.Controllers.Api
     public class ManagerController : ControllerBase
     {
         private readonly CbusManager _manager;
+        private readonly IConfiguration _configuration;
 
-        public ManagerController(CbusManager manager)
+        public ManagerController(CbusManager manager, IConfiguration configuration)
         {
             _manager = manager;
+            _configuration = configuration;
         }
 
         [HttpPost("Communications")]
@@ -55,6 +59,22 @@ namespace FcuCore.Web.Controllers.Api
                     VariableIndex = x
                 };
                 await _manager.Messenger.SendMessage(m);
+            }
+        }
+
+        [HttpPost("SaveData")]
+        public async Task SaveData([FromBody]string data)
+        {
+            using (var sw = new StreamWriter(_configuration.GetSection("Fcu")["FilePath"])) {
+                await sw.WriteAsync(data);
+            }
+        }
+
+        [HttpGet("LoadData")]
+        public async Task<IActionResult> LoadData()
+        {
+            using (var sr = new StreamReader(_configuration.GetSection("Fcu")["FilePath"])) {
+                return new JsonResult(await sr.ReadToEndAsync());
             }
         }
 

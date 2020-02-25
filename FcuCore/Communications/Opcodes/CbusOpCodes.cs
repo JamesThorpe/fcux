@@ -12,6 +12,8 @@ namespace FcuCore.Communications.Opcodes
         ACON = 0x90,
         ACOF = 0x91,
         NVANS = 0x97,
+        ASON = 0x98,
+        ASOF = 0x99,
         PARAN = 0x9B,
         PNN = 0xB6,
     }

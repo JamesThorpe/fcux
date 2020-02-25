@@ -63,9 +63,7 @@ div.node-header {
 table.node-table {
     width: 100%;
 }
-table.node-table thead tr {
-    display: block;
-}
+
     table.node-table thead th.info-cell {
         font-variant: small-caps;
         font-size: 11px;
@@ -88,12 +86,6 @@ table.node-table tr td:last-child {
 
 
 
-table.node-table tbody {
-    max-height: 400px;
-    overflow-y: scroll;
-    display: block;
-    width: 100%;
-}
 
 table.node-table tbody tr:nth-child(even) {
     background-color: #dfdfdf;
@@ -111,9 +103,8 @@ table.node-table tbody tr.selected {
 table.node-table tbody tr td > i {
     visibility: hidden;
 }
-table.node-table tbody tr td:hover > i {
-    visibility: visible;
-}
+    table.node-table tbody tr td:first-child:hover + td > i,
+    table.node-table tbody tr td:hover > i { visibility: visible; }
 
 div.node-features {
     color: #dee2e6;

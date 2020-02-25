@@ -8,6 +8,7 @@
             <thead>
             <tr>
                 <th class="info-cell">Name</th>
+                <th class="info-cell"></th>
                 <th class="info-cell">Node Number</th>
                 <th class="info-cell">CAN ID</th>
                 <th class="info-cell">Version</th>
@@ -20,7 +21,8 @@
             <tbody>
             <!-- ko foreach: modules.filteredList -->
             <tr data-bind="click: $parent.modules.selectNode, css: {selected: $parent.modules.selectedNode() === $data}">
-                <td class="info-cell"><span data-bind="text: name, title: name"></span> <i class="fa fa-pencil" data-bind="click: editName"></i></td>
+                <td class="info-cell"><span data-bind="text: name, title: name"></span></td>
+                <td><i class="fa fa-pencil" data-bind="click: editName"></i></td>
                 <td class="info-cell" data-bind="text: nodeNumber"></td>
                 <td class="info-cell" data-bind="text: canId"></td>
                 <td class="info-cell" data-bind="text: version"></td>

@@ -12,6 +12,20 @@
 
         this.params = ko.observableArray([]);
 
+        this.manufacturerId = ko.computed(() => {
+            if (this.params()[1] !== undefined) {
+                return this.params()[1];
+            }
+            return -1;
+        });
+
+        this.moduleId = ko.computed(() => {
+            if (this.params()[3] !== undefined) {
+                return this.params()[3];
+            }
+            return -1;
+        });
+
         this.minorVersion = ko.computed(() => {
             if (this.params()[2] !== undefined) {
                 return String.fromCharCode(this.params()[2]);
@@ -99,6 +113,15 @@
         this._rawNVs[nvIndex] = this.nodeVariables().find((n) => n.index === nvIndex);
         return this._rawNVs[nvIndex];
     };
+    node.prototype.addEvent = function(eventNumber) {
+        if (!this.producedEvents().find((pe) => pe.eventNumber === eventNumber)) {
+            this.producedEvents.push({
+                eventNumber: eventNumber,
+                name: `Event ${this.nodeNumber}:${eventNumber}`
+            });
+        }
+    }
+
 
     var id = 0;
 
@@ -112,6 +135,45 @@
         selectedNode: ko.observable(null),
         eventsNode: ko.observable(null),
         assignedEventsNode: ko.observable(null),
+        getData: function() {
+            return ko.toJS(cbus.modules.list,
+                function(k, v) {
+                    if (k === "nodeType")
+                        return {
+                            manufacturerId
+                        };
+
+                    return v;
+                });
+        },
+        loadData: function(d) {
+            cbus.modules.list([]);
+            for (let i in d) {
+                const n = d[i];
+                let md = null;
+                for (let m in cbus.modules.definitions) {
+                    let check = cbus.modules.definitions[m];
+                    if (check.manufacturerId === n.manufacturerId && check.moduleId === m.moduleId) {
+                        md = check;
+                        break;
+                    }
+                }
+                if (md == null) {
+                    md = cbus.modules.definitions["UNKNOWN"];
+                }
+                const ni = new node({
+                    NodeNumber: n.nodeNumber,
+                    CanId: n.canId,
+                    IsConsumerNode: n.isConsumerNode,
+                    IsProducerNode: n.isProducerNode,
+                    InFlimMode: n.inFlimMode,
+                    SupportsBootloader: n.supportsBootloader
+                }, md);
+                ni.params(n.params);
+                ni.producedEvents(n.producedEvents);
+                cbus.modules.list.push(ni);
+            }
+        },
         getByNodeNumber: (n) => {
             var f = cbus.modules.list().filter(m => m.nodeNumber === n);
             if (f.length) {
@@ -203,5 +265,18 @@
                 nv.value(msg.VariableValue);
             }
         });
+
+    cbus.comms.addHandler("ACON",
+        (msg) => {
+            const n = cbus.modules.getByNodeNumber(msg.NodeNumber);
+            n.addEvent(msg.EventNumber);
+        });
+
+    cbus.comms.addHandler("ACOF",
+        (msg) => {
+            const n = cbus.modules.getByNodeNumber(msg.NodeNumber);
+            n.addEvent(msg.EventNumber);
+        });
+
 
 })(window.cbus, ko, jQuery);

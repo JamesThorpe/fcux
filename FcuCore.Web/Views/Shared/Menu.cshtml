@@ -8,8 +8,12 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">File</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" data-bind="click: loadData">Load</a>
+                            <a class="dropdown-item" href="#" data-bind="click: saveData">Save</a>
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Actions</a>

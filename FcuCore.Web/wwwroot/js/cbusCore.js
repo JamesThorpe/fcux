@@ -100,4 +100,19 @@
 
     //TODO: reconnect socket, handle errors
 
+
+    cbus.loadData = function() {
+        cbus.api.readApi("Manager", "LoadData").done((d) => {
+            const config = JSON.parse(d);
+            cbus.modules.loadData(config.modules);
+        });
+        
+    };
+
+    cbus.saveData = function () {
+        const d = {};
+        d.modules = cbus.modules.getData();
+        cbus.api.sendApiRequest("Manager", "SaveData", JSON.stringify(d));
+    };
+
 })(window, ko, jQuery);

@@ -10,8 +10,16 @@
     </div>
     <div class="card-body">
             
+        <!-- ko if: modules.eventsNode() -->
+        <!-- ko foreach: modules.eventsNode().producedEvents -->
+        
+        <div class="event long-event">
+            <div>Node: <span data-bind="text: $parent.nodeNumber"></span>, Event: <span data-bind="text: eventNumber"></span></div>
+            <div data-bind="text: name, attr: {title: name}"></div>
+        </div>
 
-
+        <!-- /ko -->
+        <!-- /ko -->
 
         <!-- ko foreach: modules.shortEvents -->
         <div class="event short-event">
