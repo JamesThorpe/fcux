@@ -285,6 +285,6 @@ span.node-variable-index {
 }
 
 .node-selector .node-selector-list {
-    max-height: 90px;
+    max-height: 200px;
     overflow-y: scroll;
 }

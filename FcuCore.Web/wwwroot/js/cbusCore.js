@@ -113,6 +113,14 @@
         const d = {};
         d.modules = cbus.modules.getData();
         cbus.api.sendApiRequest("Manager", "SaveData", JSON.stringify(d));
+
+        const e = document.createElement("a");
+        e.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(d, null, 4)));
+        e.setAttribute("download", "fcu.json");
+        e.style.display = "none";
+        document.body.appendChild(e);
+        e.click();
+        document.body.removeChild(e);
     };
 
 })(window, ko, jQuery);

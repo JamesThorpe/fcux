@@ -136,15 +136,13 @@
         eventsNode: ko.observable(null),
         assignedEventsNode: ko.observable(null),
         getData: function() {
-            return ko.toJS(cbus.modules.list,
+            return JSON.parse(ko.toJSON(cbus.modules.list,
                 function(k, v) {
                     if (k === "nodeType")
-                        return {
-                            manufacturerId
-                        };
+                        return;
 
                     return v;
-                });
+                }));
         },
         loadData: function(d) {
             cbus.modules.list([]);
@@ -153,7 +151,7 @@
                 let md = null;
                 for (let m in cbus.modules.definitions) {
                     let check = cbus.modules.definitions[m];
-                    if (check.manufacturerId === n.manufacturerId && check.moduleId === m.moduleId) {
+                    if (check.manufacturerId === n.manufacturerId && check.moduleId === n.moduleId) {
                         md = check;
                         break;
                     }

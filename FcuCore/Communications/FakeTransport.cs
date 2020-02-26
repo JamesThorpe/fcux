@@ -26,6 +26,16 @@ namespace FcuCore.Communications {
                         var m = cmsg as ReadNodeParameterByIndexMessage;
                         BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(new ReadNodeParameterByIndexResponseMessage {
                             NodeNumber = m.NodeNumber,
+                            ParameterIndex = 1,
+                            ParameterValue = 165
+                        }.TransportString)));
+                        BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(new ReadNodeParameterByIndexResponseMessage {
+                            NodeNumber = m.NodeNumber,
+                            ParameterIndex = 3,
+                            ParameterValue = (byte)((m.NodeNumber == 256 || m.NodeNumber == 257) ? 8 : (m.NodeNumber == 258 ? 5 : 32))
+                        }.TransportString)));
+                        BytesReceived?.Invoke(this, new BytesReceivedEventArgs(Encoding.ASCII.GetBytes(new ReadNodeParameterByIndexResponseMessage {
+                            NodeNumber = m.NodeNumber,
                             ParameterIndex = 6,
                             ParameterValue = (byte)((m.NodeNumber == 259) ? 127 : 10)
                         }.TransportString)));
