@@ -203,6 +203,11 @@ span.node-variable-index {
     line-height: 35px;
 }
 
+.full-node {
+    width: 200px;
+}
+
+
 .event div:first-child, .node div:first-child {
     font-size: 11px;
     font-variant: small-caps;
@@ -227,6 +232,8 @@ span.node-variable-index {
 .event.short-event, .event.short-event div:first-child {
     border-color: #7aa395;
 }
+
+
 
 .node:active  {
     box-shadow: none;

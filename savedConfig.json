@@ -1,0 +1,392 @@
+{
+    "modules": [
+        {
+            "nodeNumber": 258,
+            "name": "ACC4",
+            "canId": 3,
+            "isConsumerNode": true,
+            "isProducerNode": false,
+            "inFlimMode": true,
+            "supportsBootloader": true,
+            "params": [
+                14,
+                165,
+                81,
+                8,
+                128,
+                2,
+                16,
+                2,
+                13,
+                1,
+                1,
+                0,
+                8,
+                0
+            ],
+            "manufacturerId": 165,
+            "moduleId": 8,
+            "minorVersion": "Q",
+            "majorVersion": 2,
+            "version": "2Q",
+            "supportedNodeVariables": 16,
+            "nodeVariables": [
+                {
+                    "index": 1,
+                    "value": 0
+                },
+                {
+                    "index": 2,
+                    "value": 0
+                },
+                {
+                    "index": 3,
+                    "value": 0
+                },
+                {
+                    "index": 4,
+                    "value": 0
+                },
+                {
+                    "index": 5,
+                    "value": 0
+                },
+                {
+                    "index": 6,
+                    "value": 0
+                },
+                {
+                    "index": 7,
+                    "value": 0
+                },
+                {
+                    "index": 8,
+                    "value": 0
+                },
+                {
+                    "index": 9,
+                    "value": 0
+                },
+                {
+                    "index": 10,
+                    "value": 0
+                },
+                {
+                    "index": 11,
+                    "value": 0
+                },
+                {
+                    "index": 12,
+                    "value": 0
+                },
+                {
+                    "index": 13,
+                    "value": 0
+                },
+                {
+                    "index": 14,
+                    "value": 0
+                },
+                {
+                    "index": 15,
+                    "value": 0
+                },
+                {
+                    "index": 16,
+                    "value": 0
+                }
+            ],
+            "_rawNVs": {
+                "1": {
+                    "index": 1,
+                    "value": 0
+                },
+                "2": {
+                    "index": 2,
+                    "value": 0
+                },
+                "3": {
+                    "index": 3,
+                    "value": 0
+                },
+                "4": {
+                    "index": 4,
+                    "value": 0
+                },
+                "5": {
+                    "index": 5,
+                    "value": 0
+                },
+                "6": {
+                    "index": 6,
+                    "value": 0
+                },
+                "7": {
+                    "index": 7,
+                    "value": 0
+                },
+                "8": {
+                    "index": 8,
+                    "value": 0
+                },
+                "9": {
+                    "index": 9,
+                    "value": 0
+                },
+                "10": {
+                    "index": 10,
+                    "value": 0
+                }
+            },
+            "producedEvents": []
+        },
+        {
+            "nodeNumber": 256,
+            "name": "ACE8CMiddle",
+            "canId": 1,
+            "isConsumerNode": true,
+            "isProducerNode": true,
+            "inFlimMode": true,
+            "supportsBootloader": true,
+            "params": [
+                20,
+                165,
+                113,
+                5,
+                32,
+                2,
+                9,
+                2,
+                15,
+                1,
+                1,
+                0,
+                8,
+                0,
+                0,
+                228,
+                26,
+                0,
+                0,
+                1
+            ],
+            "manufacturerId": 165,
+            "moduleId": 5,
+            "minorVersion": "q",
+            "majorVersion": 2,
+            "version": "2q",
+            "supportedNodeVariables": 9,
+            "nodeVariables": [
+                {
+                    "index": 1,
+                    "value": 0
+                },
+                {
+                    "index": 2,
+                    "value": 0
+                },
+                {
+                    "index": 3,
+                    "value": 0
+                },
+                {
+                    "index": 4,
+                    "value": 0
+                },
+                {
+                    "index": 5,
+                    "value": 0
+                },
+                {
+                    "index": 6,
+                    "value": 0
+                },
+                {
+                    "index": 7,
+                    "value": 0
+                },
+                {
+                    "index": 8,
+                    "value": 0
+                },
+                {
+                    "index": 9,
+                    "value": 0
+                }
+            ],
+            "_rawNVs": {
+                "1": {
+                    "index": 1,
+                    "value": 0
+                },
+                "2": {
+                    "index": 2,
+                    "value": 0
+                },
+                "3": {
+                    "index": 3,
+                    "value": 0
+                },
+                "4": {
+                    "index": 4,
+                    "value": 0
+                },
+                "5": {
+                    "index": 5,
+                    "value": 0
+                },
+                "6": {
+                    "index": 6,
+                    "value": 0
+                },
+                "8": {
+                    "index": 8,
+                    "value": 0
+                }
+            },
+            "producedEvents": []
+        },
+        {
+            "nodeNumber": 257,
+            "name": "ACE8CEnd",
+            "canId": 2,
+            "isConsumerNode": true,
+            "isProducerNode": true,
+            "inFlimMode": true,
+            "supportsBootloader": true,
+            "params": [
+                20,
+                165,
+                113,
+                5,
+                32,
+                2,
+                9,
+                2,
+                15,
+                1,
+                1,
+                0,
+                8,
+                0,
+                0,
+                228,
+                26,
+                0,
+                0,
+                1
+            ],
+            "manufacturerId": 165,
+            "moduleId": 5,
+            "minorVersion": "q",
+            "majorVersion": 2,
+            "version": "2q",
+            "supportedNodeVariables": 9,
+            "nodeVariables": [
+                {
+                    "index": 1,
+                    "value": 0
+                },
+                {
+                    "index": 2,
+                    "value": 0
+                },
+                {
+                    "index": 3,
+                    "value": 0
+                },
+                {
+                    "index": 4,
+                    "value": 0
+                },
+                {
+                    "index": 5,
+                    "value": 0
+                },
+                {
+                    "index": 6,
+                    "value": 0
+                },
+                {
+                    "index": 7,
+                    "value": 0
+                },
+                {
+                    "index": 8,
+                    "value": 0
+                },
+                {
+                    "index": 9,
+                    "value": 0
+                }
+            ],
+            "_rawNVs": {
+                "1": {
+                    "index": 1,
+                    "value": 0
+                },
+                "2": {
+                    "index": 2,
+                    "value": 0
+                },
+                "3": {
+                    "index": 3,
+                    "value": 0
+                },
+                "4": {
+                    "index": 4,
+                    "value": 0
+                },
+                "5": {
+                    "index": 5,
+                    "value": 0
+                },
+                "6": {
+                    "index": 6,
+                    "value": 0
+                },
+                "8": {
+                    "index": 8,
+                    "value": 0
+                }
+            },
+            "producedEvents": [
+                {
+					"nodeNumber": 257,
+                    "eventNumber": 2,
+                    "name": "Event 257:2"
+                },
+                {
+					"nodeNumber": 257,
+                    "eventNumber": 3,
+                    "name": "Event 257:3"
+                },
+                {
+					"nodeNumber": 257,
+                    "eventNumber": 4,
+                    "name": "Event 257:4"
+                },
+                {
+					"nodeNumber": 257,
+                    "eventNumber": 5,
+                    "name": "Event 257:5"
+                },
+                {
+					"nodeNumber": 257,
+                    "eventNumber": 6,
+                    "name": "Event 257:6"
+                },
+                {
+					"nodeNumber": 257,
+                    "eventNumber": 7,
+                    "name": "Event 257:7"
+                },
+                {
+					"nodeNumber": 257,
+                    "eventNumber": 8,
+                    "name": "Event 257:8"
+                }
+            ]
+        }
+    ]
+}

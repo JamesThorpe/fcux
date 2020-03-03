@@ -102,12 +102,6 @@
 
 
     cbus.loadData = function () {
-        /*
-        cbus.api.readApi("Manager", "LoadData").done((d) => {
-            const config = JSON.parse(d);
-            cbus.modules.loadData(config.modules);
-        });
-        */
         $("#dialog-load-config").modal("show");
     };
     var lastFile;

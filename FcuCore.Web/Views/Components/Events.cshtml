@@ -1,0 +1,45 @@
+﻿
+<div class="card">
+    <div class="card-header">
+        Events
+        
+    </div>
+    <div class="card-body row">
+        
+        <div class="col-4">
+            <h6>Producing Nodes</h6>
+        </div>
+        <div class="col-4" id="events-node-list">
+            <h6>Selected Node</h6>
+            <!-- ko using: modules.eventsNode -->
+            <div class="full-node">
+                <partial name="/Views/Components/SelectableNode.cshtml"/>
+                <!-- ko if: $data != null -->
+                <!-- ko foreach: producedEvents -->
+                <div class="event long-event">
+                    <div>Node: <span data-bind="text: $parent.nodeNumber"></span>, Event: <span data-bind="text: eventNumber"></span></div>
+                    <div data-bind="text: name, attr: {title: name}"></div>
+                </div>
+                <!-- /ko -->
+                <!-- /ko -->
+            </div>
+
+            <!-- /ko -->
+        </div>
+        <div class="col-4">
+            <h6>Consuming Nodes</h6>
+        </div>
+        
+        
+        
+        
+
+        <!-- ko foreach: modules.shortEvents -->
+        <div class="event short-event">
+            <div>DN: <span data-bind="text: dn"></span></div>
+            <div data-bind="text: name, attr: {title: name}"></div>
+        </div>
+        <!-- /ko -->
+
+    </div>
+</div>

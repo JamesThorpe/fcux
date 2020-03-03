@@ -73,6 +73,7 @@
         this._rawNVs = {};
 
         this.producedEvents = ko.observableArray([]);
+        this.consumedEvents = ko.observableArray([]);
     }
 
     node.prototype.editName = function() {
@@ -116,6 +117,7 @@
     node.prototype.addEvent = function(eventNumber) {
         if (!this.producedEvents().find((pe) => pe.eventNumber === eventNumber)) {
             this.producedEvents.push({
+                nodeNumber: this.nodeNumber,
                 eventNumber: eventNumber,
                 name: `Event ${this.nodeNumber}:${eventNumber}`
             });
@@ -134,7 +136,6 @@
         currentNode: ko.observable(null),
         selectedNode: ko.observable(null),
         eventsNode: ko.observable(null),
-        assignedEventsNode: ko.observable(null),
         getData: function() {
             return JSON.parse(ko.toJSON(cbus.modules.list,
                 function(k, v) {
@@ -190,6 +191,16 @@
         }
     };
 
+    cbus.modules.eventsNode.subscribe((nv) => {
+        setTimeout(() => {
+            $("#events-node-list .event.long-event").draggable({
+                revert:true
+            });
+        },0);
+        
+    });
+
+
     function filterNodes(f) {
         return cbus.modules.list().filter((m) => {
             const filter = f.toUpperCase();
@@ -204,6 +215,18 @@
             return cbus.modules.list();
 
         return filterNodes(cbus.modules.listFilter());
+    });
+
+    cbus.modules.filteredList.subscribe(() => {
+        setTimeout(() => {
+            $("table.node-table tbody tr").droppable({
+                drop: (e, ui) => {
+                    var event = ko.dataFor(ui.draggable[0]);
+                    var targetNode = ko.dataFor(e.target);
+                    targetNode.consumedEvents.push(event);
+                }
+            });
+        }, 0);
     });
 
     cbus.modules.nodeSelectorList = ko.computed(() => {
