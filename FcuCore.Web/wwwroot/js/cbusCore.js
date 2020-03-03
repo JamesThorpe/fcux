@@ -101,18 +101,30 @@
     //TODO: reconnect socket, handle errors
 
 
-    cbus.loadData = function() {
+    cbus.loadData = function () {
+        /*
         cbus.api.readApi("Manager", "LoadData").done((d) => {
             const config = JSON.parse(d);
             cbus.modules.loadData(config.modules);
         });
-        
+        */
+        $("#dialog-load-config").modal("show");
+    };
+    var lastFile;
+    cbus.loadData.file = function(a, b, c) {
+        b.target.files[0].text().then((f) => {
+            lastFile = f;
+        });
+    }
+
+    cbus.loadData.load = function() {
+        const config = JSON.parse(lastFile);
+        cbus.modules.loadData(config.modules);
     };
 
     cbus.saveData = function () {
         const d = {};
         d.modules = cbus.modules.getData();
-        cbus.api.sendApiRequest("Manager", "SaveData", JSON.stringify(d));
 
         const e = document.createElement("a");
         e.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(d, null, 4)));

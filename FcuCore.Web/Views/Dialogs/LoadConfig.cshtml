@@ -1,0 +1,19 @@
+﻿<div class="modal" tabindex="-1" role="dialog" id="dialog-load-config" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Load Config</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="dialog-edit-node-name-input">Name</label>
+                    <input type="file" class="form-control" data-bind="event: {change: $root.loadData.file }" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-bind="click: $root.loadData.load" data-dismiss="modal">Load</button>
+            </div>
+        </div>
+    </div>
+</div>

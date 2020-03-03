@@ -62,22 +62,6 @@ namespace FcuCore.Web.Controllers.Api
             }
         }
 
-        [HttpPost("SaveData")]
-        public async Task SaveData([FromBody]string data)
-        {
-            using (var sw = new StreamWriter(_configuration.GetSection("Fcu")["FilePath"])) {
-                await sw.WriteAsync(data);
-            }
-        }
-
-        [HttpGet("LoadData")]
-        public async Task<IActionResult> LoadData()
-        {
-            using (var sr = new StreamReader(_configuration.GetSection("Fcu")["FilePath"])) {
-                return new JsonResult(await sr.ReadToEndAsync());
-            }
-        }
-
         private async void MessengerOnMessageReceivedEnumerateNodes(object sender, CbusMessageEventArgs e)
         {
             try {
